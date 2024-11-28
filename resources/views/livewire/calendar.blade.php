@@ -2,10 +2,8 @@
    
 <!-- Botón para abrir el modal -->
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAppointmentModal">
-    Agendar Cita
-</button>
-<div wire:ignore id='calendar'></div>
+
+<div wire:ignore id='calendar' class="w-full"></div>
 
 <!-- Modal -->
 <div class="modal fade" id="createAppointmentModal" tabindex="-1" aria-labelledby="createAppointmentModalLabel" aria-hidden="true">
@@ -52,9 +50,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.min.js"></script>
-
-
 @endassets
+
 @script
 
 
