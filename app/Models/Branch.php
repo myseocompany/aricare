@@ -25,5 +25,10 @@ class Branch extends Model
     {
         return $this->hasMany(Appointment::class);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
 

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
                 ->line(__('Please click the button below to verify your email address.'))
                 ->action(__('Verify Email Address'), $url)
                 ->line(__('If you did not create an account, no further action is required.'))
-                ->salutation('¡Muchas gracias!');
+                ->salutation('¡Thank you so much!');
         });
         
     }

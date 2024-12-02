@@ -45,4 +45,14 @@ class Team extends JetstreamTeam
             'personal_team' => 'boolean',
         ];
     }
+
+    public function branches()
+    {
+        return $this->hasMany(Branch::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'teams_user', 'team_id', 'user_id');
+    }
 }

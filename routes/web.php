@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TeamController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +39,10 @@ Route::post('/email/verification-notification', function (Request $request) {
  
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+
+Route::get('/teams/{id}', [TeamController::class, 'show'])->name('teams.show');
