@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->withPersonalTeam()->create();
-
-        User::factory()->withPersonalTeam()->create([
-            'name' => 'Test User',
-            'email' => 'soporterapido@myseocompany.co',
-            'password' => Hash::make('myseo2025'),
+        $this->call([
+            DocumentTypeSeeder::class,
+            RoleSeeder::class, // Seeder para los roles
+            UserSeeder::class,
+            TeamAndBranchSeeder::class,
+            TeamUserSeeder::class,
+            AppointmentSeeder::class,
         ]);
-        $this->call(AppointmentSeeder::class);
     }
 }

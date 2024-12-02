@@ -17,10 +17,21 @@ class TeamFactory extends Factory
      */
     public function definition(): array
     {
+        // Seleccionar un usuario existente como administrador o crear uno nuevo
+        $admin = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin'); // Busca el rol admin en la relación roles
+        })->inRandomOrder()->first();
+
+        if (!$admin) {
+            // Si no hay un administrador, crear uno por defecto
+            $admin = User::factory()->create();
+            // Opcionalmente, asignar rol de administrador aquí si usas una relación explícita
+        }
+
         return [
-            'name' => $this->faker->unique()->company(),
-            'user_id' => User::factory(),
-            'personal_team' => true,
+            'user_id' => $admin->id, // Relación con un usuario administrador
+            'name' => $this->faker->unique()->company() . ' Clínica',
+            'personal_team' => false,
         ];
     }
 }

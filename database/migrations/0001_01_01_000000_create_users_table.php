@@ -17,8 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('is_super_admin')->default(false); // Indica si es super admin
+            
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
+            $table->foreignId('document_type_id')->nullable()->constrained('document_types')->nullOnDelete();
+            $table->string('document_id', 50)->nullable()->comment('User document number');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
