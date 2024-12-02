@@ -160,24 +160,19 @@
                                 <div class="border-t border-gray-200"></div>
 
                                 <!-- Authentication -->
-                                <form method="POST" action="http://127.0.0.1:8000/logout" x-data="">
-                                    <input
-                                        type="hidden"
-                                        name="_token"
-                                        value="Fc9euKcz21FsnR4W64IFmuHf2zznLP9RPrP4gg29"
-                                        autocomplete="off">
-                                    <a
-                                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                                        href="http://127.0.0.1:8000/logout"
-                                        @click.prevent="$root.submit();">
+                                <form method="POST" action="http://127.0.0.1:8000/logout">
+                                    @csrf
+                                    <button
+                                        type="submit"
+                                        class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
                                         Log Out
-                                    </a>
+                                    </button>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <hr>
             </div>
             <!-- fin contenedor otras opciones -->
