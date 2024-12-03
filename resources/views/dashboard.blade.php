@@ -11,7 +11,6 @@
                 
             </div>
 
-
             <!-- contenedor de las opciones -->
             <hr>
             <div class="options-container flex flex-col w-full mt-3">
@@ -177,7 +176,6 @@
             <!-- fin contenedor otras opciones -->
 
         </div>
-
         <!-- Contenedor del calendario -->
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-full h-full">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg h-full">
