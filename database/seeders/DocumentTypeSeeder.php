@@ -19,6 +19,11 @@ class DocumentTypeSeeder extends Seeder
             ['name' => 'Cédula de Extranjería', 'created_at' => now(), 'updated_at' => now()],
         ];
 
-        DB::table('document_types')->insert($documentTypes);
+        foreach ($documentTypes as $type) {
+            DB::table('document_types')->updateOrInsert(
+                ['name' => $type['name']],
+                ['created_at' => $type['created_at'], 'updated_at' => $type['updated_at']]
+            );
+        }
     }
 }
