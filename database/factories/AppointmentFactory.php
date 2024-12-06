@@ -15,16 +15,16 @@ class AppointmentFactory extends Factory
      */
     public function definition()
     {
-        $team = Team::inRandomOrder()->first();
-        $branch = Branch::where('team_id', $team->id)->inRandomOrder()->first();
+        $team = Team::inRandomOrder()->first() ?? Team::factory()->create();
+        $branch = Branch::where('team_id', $team->id)->inRandomOrder()->first() ?? Branch::factory()->create(['team_id' => $team->id]);
 
         $patient = User::whereHas('roles', function ($query) use ($team) {
             $query->where('roles.name', 'patient')->where('team_user.team_id', $team->id);
-        })->inRandomOrder()->first();
+        })->inRandomOrder()->first() ?? User::factory()->create()->assignRole('patient');
 
         $doctor = User::whereHas('roles', function ($query) use ($team) {
             $query->where('roles.name', 'doctor')->where('team_user.team_id', $team->id);
-        })->inRandomOrder()->first();
+        })->inRandomOrder()->first() ?? User::factory()->create()->assignRole('doctor');
 
         $startOfWeek = Carbon::now()->startOfWeek()->addDays(1);
         $endOfWeek = Carbon::now()->endOfWeek()->addDays(1);
@@ -39,10 +39,10 @@ class AppointmentFactory extends Factory
         return [
             'start_time' => $startDateTime,
             'end_time' => $endDateTime,
-            'patient_id' => $patient->id ?? null,
-            'doctor_id' => $doctor->id ?? null,
+            'patient_id' => $patient->id,
+            'doctor_id' => $doctor->id,
             'team_id' => $team->id,
-            'branch_id' => $branch->id ?? null,
+            'branch_id' => $branch->id,
             'reason' => $this->faker->randomElement(['Consulta general', 'Primera vez', 'Seguimiento', 'Revisión']),
             'description' => $this->faker->sentence(6),
         ];
