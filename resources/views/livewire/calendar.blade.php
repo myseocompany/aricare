@@ -74,6 +74,9 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay', // Cambiar entre vistas
                 },
                 events: @json($events),
+                eventColor: '#E3F4FE',
+                eventTextColor: '#3c2d30',
+                
                 select: function(data) {
                     var event_name = prompt('Event Name:');
                     if (!event_name) {

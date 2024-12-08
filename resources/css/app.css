@@ -5,3 +5,25 @@
 [x-cloak] {
     display: none;
 }
+.fc-col-header-cell-cushion{
+    color:#3a4ddd;
+    text-decoration: none;
+}
+.fc-button:hover{
+    color:white;
+}
+:root {
+    --fc-border-color: #f4f4f4;
+    --fc-col-header-cell-cushion: #3a4ddd;
+    --fc-daygrid-event-dot-width: 5px;
+
+    --fc-button-text-color: #3c2d30;
+    --fc-button-bg-color: #f3f3f3;
+    --fc-button-border-color: #f3f3f3;
+    --fc-button-hover-bg-color: #3a4ddd;
+    --fc-button-hover-border-color: #3a4ddd;
+    --fc-button--text-color: #fff;
+    
+    --fc-button-active-bg-color: #fff;
+    --fc-button-active-border-color: #fff;
+  }

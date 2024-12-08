@@ -17,7 +17,7 @@ class CreateAppointmentsTable extends Migration
             $table->id();
             $table->dateTime('start_time'); // Hora de inicio de la cita
             $table->dateTime('end_time')->nullable(); // Hora de fin de la cita
-            $table->foreignId('patient_id')->constrained('users')->onDelete('cascade'); // Relación con paciente
+            $table->foreignId('patient_id')->nullable('users')->onDelete('cascade'); // Relación con paciente
             $table->foreignId('doctor_id')->nullable()->constrained('users')->onDelete('set null'); // Relación con doctor
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('cascade'); // Relación con equipo/clínica
             $table->foreignId('branch_id')->nullable()->constrained('branches')->onDelete('cascade'); // Relación con la sede de la clínica
