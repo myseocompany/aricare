@@ -73,31 +73,27 @@ class Calendar extends Component
 
 
     public function getEvents()
-    {
-        // Validar que las fechas estén establecidas
-        if (!$this->startDate || !$this->endDate) {
-            return [];
-        }
-
-        // Consultar citas dentro del rango de fechas
-        $appointments = Appointment::whereBetween('date', [$this->startDate, $this->endDate])
-            ->get()
-            ->map(function ($appointment) {
-                return [
-                    'id' => $appointment->id,
-                    'title' => $appointment->patient,
-                    'start' => $appointment->date . 'T' . $appointment->start,
-                    'end' => $appointment->date . 'T' . $appointment->end,
-                    'description' => $appointment->description,
-                    'extendedProps' => [
-                        'reason' => $appointment->reason,
-                        'patient' => $appointment->patient,
-                    ],
-                ];
-            });
-
-        return $appointments;
+{
+    if (!$this->startDate || !$this->endDate) {
+        return [];
     }
+
+    return Appointment::whereBetween('start_time', [$this->startDate, $this->endDate])
+        ->get()
+        ->map(function ($appointment) {
+            return [
+                'id' => $appointment->id,
+                'title' => $appointment->patient ?? 'Sin nombre', // Asegúrate de manejar pacientes nulos
+                'start' => $appointment->start_time,
+                'end' => $appointment->end_time,
+                'description' => $appointment->description ?? '',
+                'extendedProps' => [
+                    'reason' => $appointment->reason ?? '',
+                ],
+            ];
+        })->toArray();
+}
+
 
     public function mount()
     {
@@ -159,9 +155,13 @@ class Calendar extends Component
         $events = [];
 
         foreach (Appointment::all() as $event) {
+            $patient = "sin paciente";
+            if(isset($event->patient) && ($event->patient->name != "") )
+                $patient = $event->patient->name;
+            
             $events[] =  [
                 'id' => $event->id,
-                'title' => $event->patient,
+                'title' => $patient,
                 'start' => Carbon::parse($event->start_time)->toIso8601String(),
                 'end' => Carbon::parse($event->end_time)->toIso8601String(),
             

@@ -109,69 +109,6 @@
         <hr>
     </div>
     <!-- fin contenedor otras opciones -->
-    <!-- contenedor otras opciones -->
-    <div class="account-options-container flex flex-col">
-        <span class="mb-3">Configuración de cuenta</span>
-        <div class="ms-3 relative">
-            <div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
-                <div @click="open = ! open">
-                    <!-- Toggle Button -->
-                    <span class="inline-flex rounded-md">
-                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                            Test User
-                            <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
-                            </svg>
-                        </button>
-                    </span>
-                </div>
 
-                <!-- Dropdown Menu -->
-                <div
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="transform opacity-0 scale-95"
-                    x-transition:enter-end="transform opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-75"
-                    x-transition:leave-start="transform opacity-100 scale-100"
-                    x-transition:leave-end="transform opacity-0 scale-95"
-                    class="absolute z-50 mt-2 w-48 rounded-md shadow-lg ltr:origin-top-right rtl:origin-top-left end-0"
-                    style="display: none;"
-                    @click="open = false">
-                    <div class="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white">
-                        <!-- Account Management -->
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            Manage Account
-                        </div>
-                        <a
-                            class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                            href="http://127.0.0.1:8000/user/profile">
-                            Profile
-                        </a>
-                        <a
-                            class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                            href="http://127.0.0.1:8000/user/api-tokens">
-                            API Tokens
-                        </a>
-
-                        <div class="border-t border-gray-200"></div>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="http://127.0.0.1:8000/logout">
-                            @csrf
-                            <button
-                                type="submit"
-                                class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
-                                Log Out
-                            </button>
-                        </form>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-    </div>
-    <!-- fin contenedor otras opciones -->
 
 </div>
