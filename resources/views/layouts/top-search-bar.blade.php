@@ -1,6 +1,22 @@
 <div class="flex items-center justify-between bg-white  rounded-lg py-4 mb-4">
     <!-- Título -->
-    <h1 class="text-xl font-bold text-gray-800">Agenda</h1>
+   
+
+    <!-- Page Heading -->
+    
+    <header class="bg-white">
+        
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-xl font-bold text-gray-800">
+            @if (isset($header))
+            {{ $header }}
+            @else
+                AriCare
+            @endif
+            </h1>
+        </div>
+    </header>
+    
 
     <!-- Barra de herramientas -->
     <div class="flex items-center gap-4">
