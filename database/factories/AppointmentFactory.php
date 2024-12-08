@@ -20,11 +20,22 @@ class AppointmentFactory extends Factory
 
         $patient = User::whereHas('roles', function ($query) use ($team) {
             $query->where('roles.name', 'patient')->where('team_user.team_id', $team->id);
-        })->inRandomOrder()->first() ?? User::factory()->create()->assignRole('patient');
-
+        })->inRandomOrder()->first();
+        
+        if (!$patient) {
+            $patient = User::factory()->create();
+            $patient->assignRole('patient', $team->id); // Usa la función personalizada
+        }
+        
         $doctor = User::whereHas('roles', function ($query) use ($team) {
             $query->where('roles.name', 'doctor')->where('team_user.team_id', $team->id);
-        })->inRandomOrder()->first() ?? User::factory()->create()->assignRole('doctor');
+        })->inRandomOrder()->first();
+        
+        if (!$doctor) {
+            $doctor = User::factory()->create();
+            $doctor->assignRole('doctor', $team->id); // Usa la función personalizada
+        }
+        
 
         $startOfWeek = Carbon::now()->startOfWeek()->addDays(1);
         $endOfWeek = Carbon::now()->endOfWeek()->addDays(1);

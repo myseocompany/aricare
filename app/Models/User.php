@@ -81,8 +81,30 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'teams_user', 'user_id', 'team_id');
+        return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id')
+                    ->withPivot('role_id', 'role')
+                    ->withTimestamps();
+    }
+    
+    public function hasRole($roleName, $teamId = null)
+    {
+        $query = $this->roles()->where('name', $roleName);
+        if ($teamId) {
+            $query->wherePivot('team_id', $teamId);
+        }
+        return $query->exists();
     }
 
+    public function assignRole($roleName, $teamId)
+    {
+        $role = Role::where('name', $roleName)->firstOrFail();
+        $this->teams()->attach($teamId, ['role_id' => $role->id, 'role' => $roleName]);
+    }
+
+    public function removeRole($roleName, $teamId)
+    {
+        $role = Role::where('name', $roleName)->firstOrFail();
+        $this->teams()->detach($teamId, ['role_id' => $role->id]);
+    }
 
 }
