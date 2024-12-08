@@ -42,7 +42,6 @@ Route::get('/home', function () {
 });
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 
