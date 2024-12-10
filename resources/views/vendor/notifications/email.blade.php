@@ -1,5 +1,5 @@
 <x-mail::message>
-    Que mas?
+    
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
