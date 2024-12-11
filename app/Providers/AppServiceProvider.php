@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        /*
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject(__('Verify Email Address'))
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
                 ->line(__('If you did not create an account, no further action is required.'))
                 ->salutation('¡Thank you so much!');
         });
+        */
         
     }
 }
