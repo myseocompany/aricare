@@ -75,7 +75,7 @@
             <!-- contenedor de la imagen -->
             <div class="image-container w-[70%] h-[100%] flex items-center justify-center">
                 <div class="relative w-[85%] h-[85%] rounded-full overflow-visible flex items-center justify-center">
-                    <img src="{{ asset('imagenes-vista-inicio/imagen-home-2.png') }}" alt="Doctor" class="relative h-[150%] object-contain -top-6">
+                    <img src="{{ asset('imagenes-vista-inicio/imagen-home.png') }}" alt="Doctor" class="relative h-[150%] object-contain -top-6">
                 </div>
             </div>
             <!-- contenedor de recuadros con info -->
