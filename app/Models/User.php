@@ -107,4 +107,14 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->teams()->detach($teamId, ['role_id' => $role->id]);
     }
 
+    public function doctorProfile()
+    {
+        return $this->hasOne(DoctorProfile::class);
+    }
+
+    public function patientProfile()
+    {
+        return $this->hasOne(PatientProfile::class);
+    }
+
 }

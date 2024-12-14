@@ -5,6 +5,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\CompanyProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,3 +47,16 @@ Route::get('/home', function () {
 Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 
 Route::get('/teams/{id}', [TeamController::class, 'show'])->name('teams.show');
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('company-profile/create', [CompanyProfileController::class, 'create'])->name('company-profile.create');
+    Route::post('company-profile', [CompanyProfileController::class, 'store'])->name('company-profile.store');
+    Route::get('company-profile/{companyProfile}/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
+    Route::put('company-profile/{companyProfile}', [CompanyProfileController::class, 'update'])->name('company-profile.update');
+
+    Route::get('company-profiles', function () {
+        return view('company_profiles.index'); // Donde incluirás el componente Livewire
+    })->name('company-profiles.index');
+});

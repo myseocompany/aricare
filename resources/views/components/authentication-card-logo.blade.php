@@ -1,6 +1,6 @@
 <a href="/">
     <svg
-    class="h-8"
+    class="h-6"
     id="logo_svg_aricare_contornos" 
     data-name="logo_aricare" 
     xmlns="http://www.w3.org/2000/svg" 

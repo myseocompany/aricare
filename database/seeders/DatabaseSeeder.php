@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TeamAndBranchSeeder::class,
             TeamUserSeeder::class,
             AppointmentSeeder::class,
+            CountryStateCitySeeder::class,
         ]);
     }
 }

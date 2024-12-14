@@ -9,7 +9,7 @@
         </svg>
     </x-slot:header>
     {{-- Greeting --}}
-    logo
+    
 @if (! empty($greeting))
 # {{ $greeting }}
 @else
