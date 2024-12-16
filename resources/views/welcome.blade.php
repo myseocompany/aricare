@@ -73,16 +73,16 @@
         <!-- contenedor -->
         <div class="welcome-container w-[70%] h-[80%] bg-gray-100 mt-[10px] shadow-[3px_3px_0px_rgba(0,0,0,0.1)] rounded-[10px] flex flex-row items-center justify-center pr-[20px]">
             <!-- contenedor de la imagen -->
-            <div class="image-container w-[70%] h-[100%] flex items-center justify-center">
+            <div class="image-container w-[70%] h-[60%] flex items-center justify-center">
                 <div class="relative w-[85%] h-[85%] rounded-full overflow-visible flex items-center justify-center">
-                    <img src="{{ asset('imagenes-vista-inicio/imagen-home.png') }}" alt="Doctor" class="relative h-[150%] object-contain -top-6">
+                    <img src="{{ asset('imagenes-vista-inicio/Doctor.png') }}" alt="Doctor" class="relative h-[150%] object-contain -top-6">
                 </div>
             </div>
             <!-- contenedor de recuadros con info -->
-            <div class="info-container w-full h-full flex flex-col items-center justify-center gap-8">
+            <div class="info-container w-full h-full flex flex-col items-center justify-center gap-8 ">
                 <!-- Contenedor de rectángulos -->
-                <div class="all-rect-container grid grid-cols-2 gap-6">
-                    <!-- Cada rectángulo -->
+                <div class="all-rect-container w-full grid grid-cols-2 gap-6">
+                    <!-- Rectángulos -->
                     <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer px-4">
                         <img src="{{ asset('imagenes-vista-inicio/historia-clinica.png') }}" alt="Doctor" class="w-10 h-10">
                         <p class="text-gray-700 font-medium text-sm">Historia clínica</p>
@@ -101,30 +101,18 @@
                     </div>
                 </div>
                 <!-- Botones -->
-                <div class="buttons-container flex flex-row gap-4 w-[100%]">
+                <div class="buttons-container flex flex-row gap-4 w-full  items-start">
                     @if (Route::has('login'))
                         @auth
-                            <!-- Botón para el Dashboard -->
-                            <a
-                                href="{{ url('/dashboard') }}"
-                                class="h-[30px] px-[10px] bg-blue-700 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800"
-                            >
+                            <a href="{{ url('/dashboard') }}" id="boton" class="h-[30px] px-4 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800">
                                 Dashboard
                             </a>
                         @else
-                            <!-- Botón para Iniciar Sesión -->
-                            <a
-                                href="{{ route('login') }}"
-                                class="h-[30px] px-[10px] bg-blue-700 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800"
-                            >
+                            <a href="{{ route('login') }}" id="boton" class="h-[30px] px-4 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800">
                                 Iniciar sesión
                             </a>
                             @if (Route::has('register'))
-                                <!-- Botón para Registrarse -->
-                                <a
-                                    href="{{ route('register') }}"
-                                    class="h-[30px] px-[10px] bg-blue-700 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800"
-                                >
+                                <a href="{{ route('register') }}" id="boton" class="h-[30px] px-4 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800">
                                     Registrarse
                                 </a>
                             @endif
@@ -133,5 +121,11 @@
                 </div>
             </div>
         </div>
+        <!-- color de fondo de boton estrictamente de este codigo hexadecimal: #3e3ef4 -->
+        <style>
+            #boton{
+                background-color: #3e3ef4;
+            }
+        </style>
     </body>
 </html>
