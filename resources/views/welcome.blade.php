@@ -78,41 +78,48 @@
                     <img src="{{ asset('imagenes-vista-inicio/Doctor.png') }}" alt="Doctor" class="relative h-[150%] object-contain -top-6">
                 </div>
             </div>
+
+
             <!-- contenedor de recuadros con info -->
-            <div class="info-container w-full h-full flex flex-col items-center justify-center gap-8 ">
+            <div class="info-container w-full h-full flex flex-col items-center justify-center gap-0">
                 <!-- Contenedor de rectángulos -->
-                <div class="all-rect-container w-full grid grid-cols-2 gap-6">
-                    <!-- Rectángulos -->
-                    <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer px-4">
-                        <img src="{{ asset('imagenes-vista-inicio/historia-clinica.png') }}" alt="Doctor" class="w-10 h-10">
-                        <p class="text-gray-700 font-medium text-sm">Historia clínica</p>
-                    </div>
-                    <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer px-4">
-                        <img src="{{ asset('imagenes-vista-inicio/agenda.png') }}" alt="Doctor" class="w-10 h-10">
-                        <p class="text-gray-700 font-medium text-sm">Agenda de citas</p>
-                    </div>
-                    <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer px-4">
-                        <img src="{{ asset('imagenes-vista-inicio/inventarios.png') }}" alt="Doctor" class="w-10 h-10">
-                        <p class="text-gray-700 font-medium text-sm">Inventarios</p>
-                    </div>
-                    <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer px-4">
-                        <img src="{{ asset('imagenes-vista-inicio/facturacion.png') }}" alt="Doctor" class="w-10 h-10">
-                        <p class="text-gray-700 font-medium text-sm">Facturación</p>
+                <div class="all-rect-container w-full flex flex-col gap-4">
+                    <!-- Primer contenedor con borde rojo -->
+                    <div class="row-container flex flex-row gap-6">
+                        <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer            px-4">
+                            <img src="{{ asset('imagenes-vista-inicio/historia-clinica.png') }}" alt="Doctor" class="w-10 h-10">
+                            <p class="text-gray-700 font-medium text-sm">Historia clínica</p>
+                        </div>
+                        <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer            px-4">
+                            <img src="{{ asset('imagenes-vista-inicio/agenda.png') }}" alt="Doctor" class="w-10 h-10">
+                            <p class="text-gray-700 font-medium text-sm">Agenda de citas</p>
+                        </div>
+                    </div>  
+                    <!-- Segundo contenedor con borde rojo -->
+                    <div class="row-container flex flex-row gap-6">
+                        <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer            px-4">
+                            <img src="{{ asset('imagenes-vista-inicio/inventarios.png') }}" alt="Doctor" class="w-10 h-10">
+                            <p class="text-gray-700 font-medium text-sm">Inventarios</p>
+                        </div>
+                        <div class="rect-container w-60 h-20 bg-white/45 shadow-md rounded-lg flex items-center gap-4 cursor-pointer            px-4">
+                            <img src="{{ asset('imagenes-vista-inicio/facturacion.png') }}" alt="Doctor" class="w-10 h-10">
+                            <p class="text-gray-700 font-medium text-sm">Facturación</p>
+                        </div>
                     </div>
                 </div>
                 <!-- Botones -->
-                <div class="buttons-container flex flex-row gap-4 w-full  items-start">
+                <div class="buttons-container flex flex-row gap-4 h-[50px] items-center self-start my-3">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" id="boton" class="h-[30px] px-4 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800">
+                            <a href="{{ url('/dashboard') }}" id="boton" class="h-[30px] px-4 text-white bg-blue-700 rounded-lg             font-medium flex items-center justify-center transition hover:bg-blue-800">
                                 Dashboard
                             </a>
                         @else
-                            <a href="{{ route('login') }}" id="boton" class="h-[30px] px-4 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800">
+                            <a href="{{ route('login') }}" id="boton" class="h-[30px] px-4 text-white bg-blue-700 rounded-lg font-medium            flex items-center justify-center transition hover:bg-blue-800">
                                 Iniciar sesión
                             </a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" id="boton" class="h-[30px] px-4 text-white rounded-lg font-medium flex items-center justify-center transition hover:bg-blue-800">
+                                <a href="{{ route('register') }}" id="boton" class="h-[30px] px-4 text-white bg-blue-700 rounded-lg             font-medium flex items-center justify-center transition hover:bg-blue-800">
                                     Registrarse
                                 </a>
                             @endif
