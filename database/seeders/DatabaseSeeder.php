@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CountryStateCitySeeder::class,
-<<<<<<< HEAD
             DocumentTypeSeeder::class,
             CompanyTypesSeeder::class,
             RoleSeeder::class,
@@ -27,10 +26,6 @@ class DatabaseSeeder extends Seeder
             TeamAndBranchSeeder::class,   // Crear equipos y sucursales
             ResourceSeeder::class,        // Crear recursos asociados a sucursales
             AppointmentSeeder::class,     // Crea citas, si aplica
-=======
-            CompanyTypesSeeder::class,
-            EmployeeRangesSeeder::class,
->>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
         ]);
     }
 }
