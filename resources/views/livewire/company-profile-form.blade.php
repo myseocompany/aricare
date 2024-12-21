@@ -12,12 +12,12 @@
                 <h2 class="text-lg font-semibold text-gray-700 mb-2">Información Básica</h2>
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 px-2 mb-4">
-                        <select wire:model.live="company_type" class="w-full border border-gray-300 p-2 rounded">
-                            <option value="" disabled selected>Tipo de empresa</option>
-                            <option value="medical">Consultorio médico</option>
-                            <option value="dental">Consultorio dental</option>
-                            <option value="pharmacy">Farmacia</option>
-                            <option value="other">Otros</option>
+                        <label for="company_type_id">Tipo de empresa:</label>
+                        <select wire:model="selectedCompanyType" class="w-full border border-gray-300 p-2 rounded">
+                            <option value="" disabled selected>Seleccione el tipo de empresa</option>
+                            @foreach ($companyTypes as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="w-full sm:w-1/2 px-2 mb-4">
@@ -26,15 +26,14 @@
                 </div>
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 px-2 mb-4">
-                        <select wire:model.live="employee_number" class="w-full border border-gray-300 p-2 rounded">
+                        <select wire:model.live="selectedEmployeeRange" class="w-full border border-gray-300 p-2 rounded">
                             <option value="" disabled selected>Número de colaboradores</option>
-                            <option value="1-5">1 - 5</option>
-                            <option value="6-10">6 - 10</option>
-                            <option value="11-20">11 - 20</option>
-                            <option value="21-50">21 - 50</option>
-                            <option value="50+">Más de 50</option>
+                            @foreach($employeeRanges as $range)
+                                <option value="{{ $range->id }}">{{ $range->range }}</option>
+                            @endforeach
                         </select>
                     </div>
+                    
                     <div class="w-full sm:w-1/2 px-2 mb-4">
                         <input wire:model.live="phone" type="tel" class="w-full border border-gray-300 p-2 rounded" placeholder="Número telefónico" />
                     </div>

@@ -95,8 +95,10 @@ public function run()
 
 
     // Ruta del archivo JSON
-    $jsonPath = database_path('seeders/data/countries+states+cities.json');
-
+    //$jsonPath = database_path('seeders/data/countries+states+cities.json');
+    $jsonPath = database_path('seeders/data/colombia_states_cities.json');
+    
+    
     // Verifica si el archivo existe
     if (!File::exists($jsonPath)) {
         logger("JSON file not found at path: " . $jsonPath);

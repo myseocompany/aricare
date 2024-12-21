@@ -7,15 +7,21 @@ use App\Models\Country;
 use App\Models\Division;
 use App\Models\City;
 use App\Models\CompanyProfile;
+use App\Models\CompanyType;
+use App\Models\EmployeeRange;
 
 class CompanyProfileForm extends Component
 {
-    public $company_type;
+    public $companyProfile;
+
+    // Campos del formulario
+    public $selectedCompanyType;
     public $company_name;
-    public $employee_number;
+    public $selectedEmployeeRange;
     public $phone;
     public $address;
 
+    // Ubicación
     public $countries;
     public $divisions = [];
     public $cities = [];
@@ -23,31 +29,43 @@ class CompanyProfileForm extends Component
     public $selectedDivision = null;
     public $selectedCity = null;
 
-    public function mount()
+    // Tablas de look-up
+    public $companyTypes;
+    public $employeeRanges;
+
+    public function mount(CompanyProfile $companyProfile = null)
     {
+        $this->companyProfile = $companyProfile;
+
+        // Cargar tablas de look-up
+        $this->companyTypes = CompanyType::all();
+        $this->employeeRanges = EmployeeRange::all();
+
+        // Cargar datos iniciales si se está editando
+        if ($companyProfile) {
+            $this->selectedCompanyType = $companyProfile->company_type_id;
+            $this->company_name = $companyProfile->company_name;
+            $this->selectedEmployeeRange = $companyProfile->employee_range_id;
+            $this->phone = $companyProfile->phone;
+            $this->address = $companyProfile->address;
+
+            $this->selectedCountry = $companyProfile->country_id;
+            $this->selectedDivision = $companyProfile->division_id;
+            $this->selectedCity = $companyProfile->city_id;
+
+            $this->divisions = Division::where('country_id', $this->selectedCountry)->get();
+            $this->cities = City::where('division_id', $this->selectedDivision)->get();
+        }
+
         $this->countries = Country::all();
-    }
-
-    public function updatedSelectedCountry($countryId)
-    {
-        $this->divisions = Division::where('country_id', $countryId)->get();
-        $this->selectedDivision = null;
-        $this->cities = [];
-        $this->selectedCity = null;
-    }
-
-    public function updatedSelectedDivision($divisionId)
-    {
-        $this->cities = City::where('division_id', $divisionId)->get();
-        $this->selectedCity = null;
     }
 
     public function submit()
     {
         $this->validate([
-            'company_type' => 'required|string|max:50',
+            'selectedCompanyType' => 'required|exists:company_types,id',
             'company_name' => 'required|string|max:255',
-            'employee_number' => 'nullable|string|max:20',
+            'selectedEmployeeRange' => 'nullable|exists:employee_ranges,id',
             'phone' => 'nullable|string|max:15',
             'selectedCountry' => 'required|exists:countries,id',
             'selectedDivision' => 'nullable|exists:divisions,id',
@@ -55,20 +73,27 @@ class CompanyProfileForm extends Component
             'address' => 'nullable|string|max:500',
         ]);
 
-        CompanyProfile::create([
-            'user_id' => auth()->id(),
-            'company_type' => $this->company_type,
+        $data = [
+            'company_type_id' => $this->selectedCompanyType,
             'company_name' => $this->company_name,
-            'employee_number' => $this->employee_number,
+            'employee_range_id' => $this->selectedEmployeeRange,
             'phone' => $this->phone,
             'country_id' => $this->selectedCountry,
             'division_id' => $this->selectedDivision,
             'city_id' => $this->selectedCity,
             'address' => $this->address,
-        ]);
+            'user_id' => auth()->id(),
+        ];
 
-        session()->flash('success', 'Perfil de la empresa creado correctamente.');
-        return redirect()->route('dashboard');
+        if ($this->companyProfile) {
+            $this->companyProfile->update($data);
+            session()->flash('success', 'Perfil de la empresa actualizado correctamente.');
+        } else {
+            CompanyProfile::create($data);
+            session()->flash('success', 'Perfil de la empresa creado correctamente.');
+        }
+
+        return redirect()->route('company-profiles.index');
     }
 
     public function render()
