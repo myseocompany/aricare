@@ -59,7 +59,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
 });
 
-<<<<<<< HEAD
 // Ruta para la lista genérica de usuarios
 Route::get('/users', function () {
     return view('user_profiles.index'); // Vista que incluye <livewire:user-profile-list />
@@ -84,25 +83,3 @@ Route::get('/patients', function () {
 Route::get('/assistants', function () {
     return view('assistant_profiles.index'); // Vista que incluye <livewire:company-profile-list />
 })->name('assistants.index');
-=======
-    Route::get('company-profiles', function () {
-        return view('company_profiles.index'); // Donde incluirás el componente Livewire
-    })->name('company-profiles.index');
-
-    Route::get('doctor-profiles', function () {
-        return view('doctor_profiles.index'); // Donde incluirás el componente Livewire
-    })->name('doctor-profiles.index');
-
-    Route::get('patient-profiles', function () {
-        return view('patient_profiles.index'); // Donde incluirás el componente Livewire
-    })->name('patient-profiles.index');
-});
-
-Route::get('/company-profiles/{companyProfile}/edit', function (CompanyProfile $companyProfile) {
-    return view('company_profiles.edit', ['companyProfile' => $companyProfile]);
-})->name('company-profile.edit')->middleware('auth');
-
-Route::get('/doctor-profiles/{doctorProfile}/edit', function (DoctorProfile $doctorProfile) {
-    return view('doctor_profiles.edit', ['doctorProfile' => $doctorProfile]);
-})->name('doctor-profile.edit')->middleware('auth');
->>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)

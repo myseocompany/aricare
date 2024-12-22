@@ -12,11 +12,6 @@ class CompanyProfile extends Model
     use HasFactory;
 
     protected $fillable = [
-<<<<<<< HEAD
-        'user_id',
-        'teama_id',
-=======
->>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
         'company_type_id',
         'company_name',
         'employee_range_id',
@@ -26,14 +21,9 @@ class CompanyProfile extends Model
         'city_id',
         'address',
         'user_id',
+        'team_id',
     ];
 
-<<<<<<< HEAD
-    public function employeeRange()
-    {
-        return $this->belongsTo(EmployeeRange::class, 'employee_range_id');
-    }
-=======
     public function employeeRange(): BelongsTo
     {
         return $this->belongsTo(EmployeeRange::class, 'employee_range_id');
@@ -44,7 +34,6 @@ class CompanyProfile extends Model
         return $this->belongsTo(CompanyType::class, 'company_type_id');
     }
 
->>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
     // Relación con el usuario
     public function user()
     {
@@ -69,10 +58,7 @@ class CompanyProfile extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function companyType()
-    {
-        return $this->belongsTo(CompanyType::class, 'company_type_id');
-    }
+
 
     public function team()
     {

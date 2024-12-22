@@ -15,10 +15,20 @@ class UserSeeder extends Seeder
         // Crear superadmin (Casa de software)
         $superAdmin = User::create([
             'name' => 'Super Admin',
-            'email' => 'superadmin@saas.com',
-            'password' => Hash::make('superadmin2025'),
+            'email' => 'soporterapido@myseocompany.co',
+            'password' => Hash::make('myseo2025'),
+            'email_verified_at' => now(), // Marcamos el correo como verificado
         ]);
-        $superAdmin->roles()->attach(1); // Rol super_admin
+        
+        // Crear un equipo global para el SuperAdmin
+        $globalTeam = Team::create([
+            'user_id' => $superAdmin->id, // Relación del equipo con el super admin
+            'name' => 'Global Team',
+            'personal_team' => false,
+        ]);
+
+        // Asociar el SuperAdmin al equipo global
+        $superAdmin->teams()->attach($globalTeam->id, ['role_id' => 1, 'role' => 'super_admin']);
 
         // Crear Company Profiles (Empresas)
         $companies = CompanyProfile::factory()->count(3)->create();
@@ -32,28 +42,26 @@ class UserSeeder extends Seeder
             ]);
 
             // Crear y asociar un administrador
-            $admin = User::factory()->create();
-            $admin->roles()->attach(2); // Rol company_admin
+            $admin = User::factory()->create([
+                'email_verified_at' => now(), // Marcamos el correo como verificado
+            ]);
             $admin->teams()->attach($team->id, ['role_id' => 2, 'role' => 'company_admin']);
 
             // Crear doctores y asociarlos al team
             $doctors = User::factory()->count(5)->create();
             foreach ($doctors as $doctor) {
-                $doctor->roles()->attach(4); // Rol doctor
                 $doctor->teams()->attach($team->id, ['role_id' => 4, 'role' => 'doctor']);
             }
 
             // Crear pacientes y asociarlos al team
             $patients = User::factory()->count(20)->create();
             foreach ($patients as $patient) {
-                $patient->roles()->attach(6); // Rol patient
                 $patient->teams()->attach($team->id, ['role_id' => 6, 'role' => 'patient']);
             }
 
             // Crear asistentes y asociarlos al team
             $assistants = User::factory()->count(3)->create();
             foreach ($assistants as $assistant) {
-                $assistant->roles()->attach(5); // Rol assistant
                 $assistant->teams()->attach($team->id, ['role_id' => 5, 'role' => 'assistant']);
             }
         }
