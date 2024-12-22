@@ -13,12 +13,11 @@ class CompanyProfileController extends Controller
     public function create()
     {
         $countries = Country::all();
-        return view('company_profiles.create', compact('countries'));
+        return view('company-profiles.create', compact('countries'));
     }
 
     public function store(Request $request)
     {   
-        dd($request);
         
         $validated = $request->validate([
             'company_type' => 'required|string|max:50',
@@ -46,7 +45,7 @@ class CompanyProfileController extends Controller
         $divisions = Division::where('country_id', $companyProfile->country_id)->get();
         $cities = City::where('division_id', $companyProfile->division_id)->get();
 
-        return view('company_profiles.edit', compact('companyProfile', 'countries', 'divisions', 'cities'));
+        return view('company-profiles.edit', compact('companyProfile', 'countries', 'divisions', 'cities'));
     }
 
     public function update(Request $request, CompanyProfile $companyProfile)

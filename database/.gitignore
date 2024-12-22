@@ -1,1 +1,10 @@
 *.sqlite*
+# macOS system files
+.DS_Store
+.localized
+
+# iCloud files
+*.icloud
+
+# JSON files in root
+/countries+states+cities.json

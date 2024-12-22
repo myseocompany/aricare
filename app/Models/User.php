@@ -107,14 +107,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->teams()->detach($teamId, ['role_id' => $role->id]);
     }
 
+    // Relación con doctor_profiles
     public function doctorProfile()
     {
-        return $this->hasOne(DoctorProfile::class);
+        return $this->hasOne(DoctorProfile::class, 'user_id');
     }
 
     public function patientProfile()
     {
         return $this->hasOne(PatientProfile::class);
+    }
+
+    // Relación específica para doctores
+    public function isDoctor()
+    {
+        return $this->teams()->wherePivot('role', 'doctor')->orWherePivot('role_id', 2);
     }
 
 }

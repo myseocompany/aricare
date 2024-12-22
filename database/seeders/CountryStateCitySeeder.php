@@ -78,7 +78,7 @@ private function processCity($city, $stateId)
         return;
     }
 
-    logger("Processing city: " . $city['name']);
+    //logger("Processing city: " . $city['name']);
 
     DB::table('cities')->insert([
         'division_id' => $stateId,
@@ -95,10 +95,16 @@ public function run()
 
 
     // Ruta del archivo JSON
+<<<<<<< HEAD
     //$jsonPath = database_path('seeders/data/countries+states+cities.json');
     $jsonPath = database_path('seeders/data/colombia_states_cities.json');
     
     
+=======
+//    $jsonPath = database_path('seeders/data/countries+states+cities.json');
+    $jsonPath = database_path('seeders/data/colombia_states_cities.json');
+
+>>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
     // Verifica si el archivo existe
     if (!File::exists($jsonPath)) {
         logger("JSON file not found at path: " . $jsonPath);

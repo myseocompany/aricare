@@ -13,7 +13,11 @@
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 px-2 mb-4">
                         <label for="company_type_id">Tipo de empresa:</label>
+<<<<<<< HEAD
                         <select wire:model="selectedCompanyType" class="w-full border border-gray-300 p-2 rounded">
+=======
+                        <select wire:model.live="selectedCompanyType" class="w-full border border-gray-300 p-2 rounded">
+>>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
                             <option value="" disabled selected>Seleccione el tipo de empresa</option>
                             @foreach ($companyTypes as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -21,20 +25,31 @@
                         </select>
                     </div>
                     <div class="w-full sm:w-1/2 px-2 mb-4">
+                        <label for="company_name">Nombre de la empresa:</label>
+                        
                         <input wire:model.live="company_name" type="text" class="w-full border border-gray-300 p-2 rounded" placeholder="Nombre de la empresa" />
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 px-2 mb-4">
+<<<<<<< HEAD
                         <select wire:model.live="selectedEmployeeRange" class="w-full border border-gray-300 p-2 rounded">
                             <option value="" disabled selected>Número de colaboradores</option>
                             @foreach($employeeRanges as $range)
+=======
+                        <label for="employee_range_id">Número de colaboradores:</label>
+                        <select wire:model="selectedEmployeeRange" class="w-full border border-gray-300 p-2 rounded">
+                            <option value="" disabled selected>Seleccione el rango de empleados</option>
+                            @foreach ($employeeRanges as $range)
+>>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
                                 <option value="{{ $range->id }}">{{ $range->range }}</option>
                             @endforeach
                         </select>
                     </div>
                     
                     <div class="w-full sm:w-1/2 px-2 mb-4">
+                        <label for="phone">Teléfono de la empresa:</label>
+                        
                         <input wire:model.live="phone" type="tel" class="w-full border border-gray-300 p-2 rounded" placeholder="Número telefónico" />
                     </div>
                 </div>
