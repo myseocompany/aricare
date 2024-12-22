@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CompanyProfileController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -55,8 +56,30 @@ Route::middleware(['auth'])->group(function () {
     Route::post('company-profile', [CompanyProfileController::class, 'store'])->name('company-profile.store');
     Route::get('company-profile/{companyProfile}/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
     Route::put('company-profile/{companyProfile}', [CompanyProfileController::class, 'update'])->name('company-profile.update');
-
-    Route::get('company-profiles', function () {
-        return view('company_profiles.index'); // Donde incluirás el componente Livewire
-    })->name('company-profiles.index');
+    Route::get('company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
 });
+
+// Ruta para la lista genérica de usuarios
+Route::get('/users', function () {
+    return view('user_profiles.index'); // Vista que incluye <livewire:user-profile-list />
+})->name('users.index');
+
+// Ruta para la lista de doctores
+Route::get('/doctors', function () {
+    return view('doctor_profiles.index'); // Vista que incluye <livewire:doctor-profile-list />
+})->name('doctors.index');
+
+
+// Ruta para otras listas específicas (si se necesita en el futuro)
+// Ejemplo: Ruta para empresas
+Route::get('/companies', function () {
+    return view('company_profiles.index'); // Vista que incluye <livewire:company-profile-list />
+})->name('companies.index');
+
+Route::get('/patients', function () {
+    return view('patient_profiles.index'); // Vista que incluye <livewire:company-profile-list />
+})->name('patients.index');
+
+Route::get('/assistants', function () {
+    return view('assistant_profiles.index'); // Vista que incluye <livewire:company-profile-list />
+})->name('assistants.index');

@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\CompanyProfile;
 use App\Models\CompanyType;
 use App\Models\EmployeeRange;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyProfileForm extends Component
 {
@@ -61,9 +62,10 @@ class CompanyProfileForm extends Component
     }
 
     public function submit()
-    {
+    {   
+
         $this->validate([
-            'selectedCompanyType' => 'required|exists:company_types,id',
+            'selectedCompanyType' => 'nullable|exists:company_types,id',
             'company_name' => 'required|string|max:255',
             'selectedEmployeeRange' => 'nullable|exists:employee_ranges,id',
             'phone' => 'nullable|string|max:15',
@@ -72,6 +74,8 @@ class CompanyProfileForm extends Component
             'selectedCity' => 'nullable|exists:cities,id',
             'address' => 'nullable|string|max:500',
         ]);
+
+        
 
         $data = [
             'company_type_id' => $this->selectedCompanyType,
@@ -82,9 +86,10 @@ class CompanyProfileForm extends Component
             'division_id' => $this->selectedDivision,
             'city_id' => $this->selectedCity,
             'address' => $this->address,
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ];
-
+        
+        dd($this->companyProfile);
         if ($this->companyProfile) {
             $this->companyProfile->update($data);
             session()->flash('success', 'Perfil de la empresa actualizado correctamente.');

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Team;
 use Illuminate\Database\Seeder;
 
+
 class BranchSeeder extends Seeder
 {
     /**
@@ -20,14 +21,14 @@ class BranchSeeder extends Seeder
             $team->branches()->createMany([
                 [
                     'name' => 'Sede Principal - ' . $team->name,
-                    'address' => $this->faker->address(),
-                    'phone' => $this->faker->phoneNumber(),
+                    'address' => fake()->address(),
+                    'phone' => fake()->phoneNumber(),
                     'email' => 'contacto@sede-' . $team->id . '.com',
                 ],
                 [
                     'name' => 'Sede Secundaria - ' . $team->name,
-                    'address' => $this->faker->address(),
-                    'phone' => $this->faker->phoneNumber(),
+                    'address' => fake()->address(),
+                    'phone' => fake()->phoneNumber(),
                     'email' => 'contacto2@sede-' . $team->id . '.com',
                 ],
             ]);

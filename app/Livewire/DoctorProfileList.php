@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Livewire;
 
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class CompanyProfileList extends Component
+class DoctorProfileList extends Component
 {
     use WithPagination;
 
@@ -24,9 +24,9 @@ class CompanyProfileList extends Component
 
     public function render()
     {
-        // Consulta base para obtener los usuarios con rol de "paciente"
+        // Consulta base para obtener los usuarios con rol de "doctor"
         $query = User::query()->whereHas('teams', function (Builder $q) {
-            $q->where('team_user.role', 'admin')->orWhere('team_user.role_id', 3); // 1: ID del rol "paciente"
+            $q->where('role', 'doctor')->orWhere('role_id', 4); // Filtro por rol "doctor"
         });
 
         // Aplicar búsqueda global con el servicio
@@ -38,11 +38,12 @@ class CompanyProfileList extends Component
         // Paginar los resultados
         $items = $query->paginate($this->perPage);
 
-        return view('livewire.company-profile-list', [
+        return view('livewire.doctor-profile-list', [
             'items' => $items,
             'columns' => [
                 'name' => 'Nombre',
                 'email' => 'Correo Electrónico',
+                'teams.role' => 'Rol',
                 'created_at' => 'Fecha de Registro',
             ],
         ]);

@@ -3,43 +3,59 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Team;
+use App\Models\CompanyProfile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        User::factory()->withPersonalTeam()->create([
-            'name' => 'Test User',
-            'email' => 'soporterapido@myseocompany.co',
-            'password' => Hash::make('myseo2025'),
-            'is_super_admin' => true, // Super Admin
-            'document_type_id' => 1, // Ejemplo: Cédula de Ciudadanía
-            'document_id' => '75078986',
-            
-            
+        // Crear superadmin (Casa de software)
+        $superAdmin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@saas.com',
+            'password' => Hash::make('superadmin2025'),
         ]);
-        // Crear un administrador específico
-        User::create([
-            'name' => 'Admin Clinica',
-            'email' => 'admin@clinica.com',
-            'password' => Hash::make('password'),
-            'is_super_admin' => false, // Super Admin
-            'document_type_id' => 1, // Ejemplo: Cédula de Ciudadanía
-            'document_id' => '999999999',
-            
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $superAdmin->roles()->attach(1); // Rol super_admin
 
-        // Crear doctores
-        User::factory()->count(5)->create();
+        // Crear Company Profiles (Empresas)
+        $companies = CompanyProfile::factory()->count(3)->create();
 
-        // Crear pacientes
-        User::factory()->count(20)->create();
+        foreach ($companies as $company) {
+            // Crear un Team para cada empresa
+            $team = Team::create([
+                'user_id' => $company->user_id,
+                'name' => $company->company_name . ' Team',
+                'personal_team' => false,
+            ]);
+
+            // Crear y asociar un administrador
+            $admin = User::factory()->create();
+            $admin->roles()->attach(2); // Rol company_admin
+            $admin->teams()->attach($team->id, ['role_id' => 2, 'role' => 'company_admin']);
+
+            // Crear doctores y asociarlos al team
+            $doctors = User::factory()->count(5)->create();
+            foreach ($doctors as $doctor) {
+                $doctor->roles()->attach(4); // Rol doctor
+                $doctor->teams()->attach($team->id, ['role_id' => 4, 'role' => 'doctor']);
+            }
+
+            // Crear pacientes y asociarlos al team
+            $patients = User::factory()->count(20)->create();
+            foreach ($patients as $patient) {
+                $patient->roles()->attach(6); // Rol patient
+                $patient->teams()->attach($team->id, ['role_id' => 6, 'role' => 'patient']);
+            }
+
+            // Crear asistentes y asociarlos al team
+            $assistants = User::factory()->count(3)->create();
+            foreach ($assistants as $assistant) {
+                $assistant->roles()->attach(5); // Rol assistant
+                $assistant->teams()->attach($team->id, ['role_id' => 5, 'role' => 'assistant']);
+            }
+        }
     }
 }

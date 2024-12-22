@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id(); // Identificador único del rol
             $table->string('name')->unique(); // Nombre del rol (admin, doctor, patient, etc.)
+            $table->string('description'); // Nombre del rol (admin, doctor, patient, etc.)
             $table->timestamps(); // Marcas de tiempo
         });
     }

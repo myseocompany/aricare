@@ -11,6 +11,7 @@ class CompanyProfile extends Model
 
     protected $fillable = [
         'user_id',
+        'teama_id',
         'company_type_id',
         'company_name',
         'employee_range_id',
@@ -22,9 +23,9 @@ class CompanyProfile extends Model
     ];
 
     public function employeeRange()
-{
-    return $this->belongsTo(EmployeeRange::class, 'employee_range_id');
-}
+    {
+        return $this->belongsTo(EmployeeRange::class, 'employee_range_id');
+    }
     // Relación con el usuario
     public function user()
     {
@@ -50,7 +51,13 @@ class CompanyProfile extends Model
     }
 
     public function companyType()
-{
-    return $this->belongsTo(CompanyType::class, 'company_type_id');
-}
+    {
+        return $this->belongsTo(CompanyType::class, 'company_type_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
 }

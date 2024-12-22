@@ -21,7 +21,9 @@
             @forelse ($items as $item)
                 <tr>
                     @foreach(array_keys($columns) as $field)
-                        <td class="border p-2">{{ data_get($item, $field) }}</td>
+                        <td class="border p-2">
+                            {{ data_get($item, $field) }}
+                        </td>
                     @endforeach
                 </tr>
             @empty

@@ -15,16 +15,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            DocumentTypeSeeder::class,
-            RoleSeeder::class, // Seeder para los roles
-            UserSeeder::class,
-            TeamAndBranchSeeder::class,
-            TeamUserSeeder::class,
-            AppointmentSeeder::class,
             CountryStateCitySeeder::class,
+            DocumentTypeSeeder::class,
             CompanyTypesSeeder::class,
-            EmployeeRangeSeeder::class
-            
+            RoleSeeder::class,
+            EmployeeRangeSeeder::class,
+            ResourceTypeSeeder::class,
+            UserSeeder::class,             // Crear usuarios (incluidos administradores)
+            CompanyProfileSeeder::class,  // Asociar administradores con CompanyProfiles
+            TeamAndBranchSeeder::class,   // Crear equipos y sucursales
+            ResourceSeeder::class,        // Crear recursos asociados a sucursales
+            AppointmentSeeder::class,     // Crea citas, si aplica
         ]);
     }
 }
