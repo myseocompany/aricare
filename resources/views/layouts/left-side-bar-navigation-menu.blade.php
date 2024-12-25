@@ -13,7 +13,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar4">
                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
             </svg>
-            <span>Agenda</span>
+            
+            <a href="{{ route('agendas.index') }}" class="no-underline text-gray-500 hover:text-blue-700">
+                <span>Agenda</span>
+            </a>
         </div>
 
         <div class="element flex flex-row items-center gap-3 cursor-pointer my-2 p-2 rounded-md text-gray-500 hover:bg-blue-100 hover:text-blue-700 transition ease-in-out duration-150">

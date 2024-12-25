@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Livewire;
 
@@ -24,9 +24,9 @@ class CompanyProfileList extends Component
 
     public function render()
     {
-        // Consulta base para obtener los usuarios con rol de "doctor"
+        // Consulta base para obtener los usuarios con rol de "paciente"
         $query = User::query()->whereHas('teams', function (Builder $q) {
-            $q->where('role', 'doctor')->orWhere('role_id', 2); // Filtro por rol "doctor"
+            $q->where('team_user.role', 'admin')->orWhere('team_user.role_id', 2); // 1: ID del rol "paciente"
         });
 
         // Aplicar búsqueda global con el servicio
@@ -38,12 +38,11 @@ class CompanyProfileList extends Component
         // Paginar los resultados
         $items = $query->paginate($this->perPage);
 
-        return view('livewire.doctor-profile-list', [
+        return view('livewire.company-profile-list', [
             'items' => $items,
             'columns' => [
                 'name' => 'Nombre',
                 'email' => 'Correo Electrónico',
-                'teams.role' => 'Rol',
                 'created_at' => 'Fecha de Registro',
             ],
         ]);
