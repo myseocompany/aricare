@@ -13,4 +13,11 @@ class Role extends Model
                     ->withTimestamps();
     }
 
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class, 'role_modules')
+            ->withPivot('created', 'readed', 'updated', 'deleted', 'list')
+            ->withTimestamps();
+    }
+
 }

@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\RoleController;
+
 
 
 Route::get('/', function () {
@@ -26,6 +28,8 @@ Route::middleware([
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
+
+
 
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
@@ -77,10 +81,14 @@ Route::middleware(['auth'])->group(function () {
 
     //ruta para acceder a los roles
     Route::get('/config/user_rol', [RoleController::class, 'index'])->name('user_rol.index');
-    Route::get('/config/user_rol', function(){
-        return view('config.user_rol.index');
-    })->name('user_rol.index');
+    //Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::post('/roles/permission', [RoleController::class, 'RolModuleChangePermission'])->name('roles.change_permission');
+    Route::get('/roles/{id}/modules', [RoleController::class, 'getModules'])->name('roles.get_modules');
+    Route::post('/roles/{rid}/modules/{mid}', [RoleController::class, 'saveRoleModule'])->name('roles.save_role_module');
 
+    Route::get('/roles/{moduleId}/permissions', [RoleController::class, 'getRolePermissions'])
+    ->name('roles.get_permissions');
+    
     //ruta para crear un nuevo rol
     Route::get('/config/user_rol/create', function(){
         return view('config.user_rol.create');
