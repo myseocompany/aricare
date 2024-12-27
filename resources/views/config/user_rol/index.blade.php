@@ -22,7 +22,7 @@
 	<table class="table" id="table">
 		<thead>
 			<tr>
-				<th>Role</th>
+				<th></th>
 				<th>Module</th>
 				<th>Create</th>
 				<th>Read</th>

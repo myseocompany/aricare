@@ -74,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
         return view('config.index');
     })->name('config.index');
 
-    //ruta para acceder a los roles de usuario
+    //ruta para acceder a los roles
     Route::get('/config/user_rol', function(){
         return view('config.user_rol.index');
     })->name('user_rol.index');

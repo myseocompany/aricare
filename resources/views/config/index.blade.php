@@ -8,7 +8,7 @@
         <a href="" class="min-w-[150px] no-underline ml-[20px] text-gray-500 hover:text-blue-700 bg-green-400 px-5 py-3 text-white cursor-pointer flex justify-center items-center">
             Administrador de Usuarios
         </a>
-        <a href="" class="min-w-[150px] no-underline ml-[20px] text-gray-500 hover:text-blue-700 bg-green-400 px-5 py-3 text-white cursor-pointer flex justify-center items-center">
+        <a href="#" class="min-w-[150px] no-underline ml-[20px] text-gray-500 hover:text-blue-700 bg-green-400 px-5 py-3 text-white cursor-pointer flex justify-center items-center">
             Auditar el Sistema
         </a>
     </div>
