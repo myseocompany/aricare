@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             TeamAndBranchSeeder::class,   // Crear equipos y sucursales
             ResourceSeeder::class,        // Crear recursos asociados a sucursales
             AppointmentSeeder::class,     // Crea citas, si aplica
+            ModulesTableSeeder::class,
         ]);
     }
 }
