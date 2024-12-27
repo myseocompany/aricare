@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CompanyProfileController;
+use App\Http\Controllers\AppointmentController;
 
 
 Route::get('/', function () {
@@ -86,7 +87,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/agendas', function () {
         return view('agendas.index'); 
     })->name('agendas.index');
+
+    Route::post('/appointments/store', 
+        [AppointmentController::class, 'store']
+    )->name('appointments.store');
+
+
     
 
 });
+Route::resource('appointments', AppointmentController::class)->except(['create', 'edit']);
 

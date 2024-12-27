@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             EmployeeRangeSeeder::class,
             ResourceTypeSeeder::class,
+            AppointmentTypeSeeder::class,
             UserSeeder::class,             // Crear usuarios (incluidos administradores)
             CompanyProfileSeeder::class,  // Asociar administradores con CompanyProfiles
             TeamAndBranchSeeder::class,   // Crear equipos y sucursales

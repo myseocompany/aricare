@@ -2,15 +2,21 @@
 
 namespace App\Livewire;
 
-use App\Models\Event;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Appointment;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
-use Illuminate\Support\Facades\Log;
+use App\Models\Event;
+use App\Models\Appointment;
+use App\Models\AppointmentType;
+use App\Models\User;
+use App\Models\Branch;
+use App\Models\Resource;
+
+
 
 
 
@@ -18,11 +24,16 @@ class Calendar extends Component
 {
     
     public $appointments = [];
-
+    public $types = [];
 
     public $startDate;
     public $endDate;
-
+    public $color;
+    public $branches;
+    public $resources;
+    public $patients;
+    public $doctors;
+    
     public function newEvent($name, $startDate, $endDate)
 {   
 
@@ -89,7 +100,9 @@ class Calendar extends Component
                 'description' => $appointment->description ?? '',
                 'extendedProps' => [
                     'reason' => $appointment->reason ?? '',
+                    'type' => $appointment->type->name ?? 'No especificado',
                 ],
+                'color' => $appointment->type->color ?? '#FFFFFF', // Color del tipo de cita
             ];
         })->toArray();
 }
@@ -97,7 +110,20 @@ class Calendar extends Component
 
     public function mount()
     {
-        
+        $this->types = AppointmentType::all();
+        $this->branches = Branch::all();
+        $this->doctors = User::whereHas('roles', function ($query) {
+            $query->where('name', 'doctor');
+        })->get();
+
+        $this->patients = User::whereHas('roles', function ($query) {
+            $query->where('name', 'patient');
+        })->get();
+
+        $this->resources = Resource::all();
+
+
+ 
 
         $this->appointments = Appointment::all()->map(function ($appointment) {
             return [
@@ -110,6 +136,7 @@ class Calendar extends Component
                     'reason' => $appointment->reason,
                     'patient' => $appointment->patient,
                 ],
+                'color' => $appointment->type->color ?? '#FFFFFF', // Color del tipo de cita
             ];
         })->toArray();
 
@@ -121,6 +148,7 @@ class Calendar extends Component
         'time' => '',
         'patient' => '',
         'reason' => '',
+        'color' => '',
     ];
     
     public function saveAppointment()
@@ -131,7 +159,20 @@ class Calendar extends Component
             'appointment.time' => 'required',
             'appointment.patient' => 'required',
             'appointment.reason' => 'required',
+            'appointment.type_id' => 'required|exists:appointment_types,id', // Validación del tipo de cita
         ]);
+
+        Appointment::create([
+            'date' => $this->appointment['date'],
+            'time' => $this->appointment['time'],
+            'patient' => $this->appointment['patient'],
+            'reason' => $this->appointment['reason'],
+            'appointment_type_id' => $this->appointment['type_id'], // Guardar el tipo de cita
+        ]);
+        
+        $this->dispatch('closeModal');
+        $this->reset('appointment');
+        $this->emit('refreshCalendar');
         //dd($this->appointment);
         $this->dispatch('closeModal');
         /*
@@ -144,7 +185,7 @@ class Calendar extends Component
         $this->emit('refreshCalendar');
     
         // Cierra el modal
-        $this->dispatchBrowserEvent('closeModal', ['modalId' => 'createAppointmentModal']);
+        $this->dispatch('closeModal', ['modalId' => 'createAppointmentModal']);
         */
 
     }
@@ -164,7 +205,7 @@ class Calendar extends Component
                 'title' => $patient,
                 'start' => Carbon::parse($event->start_time)->toIso8601String(),
                 'end' => Carbon::parse($event->end_time)->toIso8601String(),
-            
+                'color' => $event->type->color ?? '#FFFFFF', // Fallback al color blanco
                 
             ];
         }
@@ -173,4 +214,6 @@ class Calendar extends Component
             'events' => $events
         ]);
     }
+
+    
 }

@@ -12,8 +12,6 @@ class CreateResourcesTable extends Migration
             $table->id();
             $table->foreignId('branch_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('type'); // E.g., "consultorio", "unidad odontológica", "sala de rayos X"
-            $table->text('description')->nullable();
             $table->boolean('multi_patient')->default(false); // Si permite más de un paciente a la vez
             $table->timestamps();
         });

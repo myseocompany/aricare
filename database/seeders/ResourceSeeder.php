@@ -25,8 +25,6 @@ class ResourceSeeder extends Seeder
                     'branch_id' => $branch->id,
                     'type_id' => $resourceType->id,
                     'name' => $resourceType->name . ' ' . ($i + 1),
-                    'type' => $resourceType->name,
-                    'description' => $resourceType->description,
                     'multi_patient' => (bool)rand(0, 1),
                 ]);
             }

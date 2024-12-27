@@ -30,5 +30,11 @@ class Branch extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function resources()
+    {
+        return $this->hasMany(Resource::class);
+    }
+
 }
 

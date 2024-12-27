@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('myseo2025'),
             'email_verified_at' => now(), // Marcamos el correo como verificado
         ]);
-        
+
         // Crear un equipo global para el SuperAdmin
         $globalTeam = Team::create([
             'user_id' => $superAdmin->id, // Relación del equipo con el super admin
@@ -36,14 +36,17 @@ class UserSeeder extends Seeder
         foreach ($companies as $company) {
             // Crear un Team para cada empresa
             $team = Team::create([
-                'user_id' => $company->user_id,
+                'user_id' => $company->user_id ?? $superAdmin->id, // Si no hay un usuario específico, usar el SuperAdmin
                 'name' => $company->company_name . ' Team',
                 'personal_team' => false,
             ]);
 
             // Crear y asociar un administrador
             $admin = User::factory()->create([
-                'email_verified_at' => now(), // Marcamos el correo como verificado
+                'name' => $company->company_name . ' Admin',
+                'email' => 'admin_' . $company->id . '@myseocompany.co',
+                'password' => Hash::make('myseo2025'),
+                'email_verified_at' => now(),
             ]);
             $admin->teams()->attach($team->id, ['role_id' => 2, 'role' => 'company_admin']);
 
@@ -64,6 +67,23 @@ class UserSeeder extends Seeder
             foreach ($assistants as $assistant) {
                 $assistant->teams()->attach($team->id, ['role_id' => 5, 'role' => 'assistant']);
             }
+
+            // Crear el asistente Nicolás si no existe
+            $nicolas = User::firstOrCreate(
+                ['email' => 'nicolas@myseocompany.co'], // Condición para buscar
+                [ // Valores para insertar si no existe
+                    'name' => 'Nicolás',
+                    'password' => Hash::make('myseo2025'),
+                    'email_verified_at' => now(),
+                ]
+            );
+
+            // Asociar Nicolás al equipo si no está asociado
+            if (!$nicolas->teams()->where('team_id', $team->id)->exists()) {
+                $nicolas->teams()->attach($team->id, ['role_id' => 5, 'role' => 'assistant']);
+}
+    
+        
         }
     }
 }

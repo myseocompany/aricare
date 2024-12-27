@@ -21,8 +21,15 @@ class Appointment extends Model
         'doctor_id',
         'team_id',
         'branch_id',
+        'resource_id',
         'reason',
-        'description',
+        'type_id',
+    ];
+
+    // Configurar los campos como fechas
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
     ];
 
     /**
@@ -56,4 +63,10 @@ class Appointment extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function type()
+    {
+        return $this->belongsTo(AppointmentType::class, 'type_id');
+    }
+
 }
