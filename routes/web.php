@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
    // Route::get('company-profile/{companyProfile}/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
     Route::put('company-profile/{companyProfile}', [CompanyProfileController::class, 'update'])->name('company-profile.update');
     Route::get('company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
+    
 
     // Ruta para la lista genérica de usuarios
     Route::get('/users', function () {
@@ -75,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('config.index');
 
     //ruta para acceder a los roles
+    Route::get('/config/user_rol', [RoleController::class, 'index'])->name('user_rol.index');
     Route::get('/config/user_rol', function(){
         return view('config.user_rol.index');
     })->name('user_rol.index');

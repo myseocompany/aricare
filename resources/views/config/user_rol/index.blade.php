@@ -1,22 +1,7 @@
 <div class="row">
 	<div class="form-group col-md-5">
-		<label for="role_id">Roles</label>
-		<select id="role_id" name="role_id" class="custom-select" onchange="loadModules();">
-			<option value="">Select a Role...</option>
-			@foreach($roles as $role)
-				<option value="{{$role->id}}">{{$role->name}}</option>
-			@endforeach
-		</select>
-	</div>
-	<div class="form-group col-md-5">
 		<div id="modules"></div>
 	</div>
-	  @if (  Auth::user()->getPermitsRoleModule(Auth::user()->role_id,7,1,0,0,0,0) == 1)
-	<div class="form-group col-md-2">
-		<br>
-		<a class="btn btn-primary btn-sm" onclick="saveRoleModule();" style="color: white;">Create</a>
-	</div>
-	@endif
 </div>
 <div class="table-responsive-sm">
 	<table class="table" id="table">
@@ -40,11 +25,11 @@
 				<td>
 					@if($item->created == 1)
 						<div>
-							<input checked="" class="switch" type="checkbox" id="isCheckedClass_created_{{$item->role_id}}{{$item->module_id}}" name="isCheckedClass_created{{$item->role_id}}_{{$item->module_id}}" onchange="changePermission({{$item->role_id}},{{$item->module_id}}, 'created');" value="1">
+							<input checked="" class="switch" type="checkbox" id="isCheckedClass_created_{{$item->role_id}}{{$item->module_id}}" name="isCheckedClass_created{{$item->role_id}}_{{$item->module_id}}">
 						</div>
 					@else
 						<div>
-							<input class="switch" type="checkbox" id="isCheckedClass_created_{{$item->role_id}}{{$item->module_id}}" name="isCheckedClass_created{{$item->role_id}}_{{$item->module_id}}" onchange="changePermission({{$item->role_id}},{{$item->module_id}}, 'created');" value="">
+							<input class="switch" type="checkbox" id="isCheckedClass_created_{{$item->role_id}}{{$item->module_id}}" name="isCheckedClass_created{{$item->role_id}}_{{$item->module_id}}">
 						</div>	
 					@endif
 				</td>
