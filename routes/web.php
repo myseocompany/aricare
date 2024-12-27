@@ -69,6 +69,20 @@ Route::middleware(['auth'])->group(function () {
         return view('doctor_profiles.index'); // Vista que incluye <livewire:doctor-profile-list />
     })->name('doctors.index');
 
+    // ruta para acceder a la configuracion
+    Route::get('/config', function(){
+        return view('config.index');
+    })->name('config.index');
+
+    //ruta para acceder a los roles de usuario
+    Route::get('/config/user_rol', function(){
+        return view('config.user_rol.index');
+    })->name('user_rol.index');
+
+    //ruta para crear un nuevo rol
+    Route::get('/config/user_rol/create', function(){
+        return view('config.user_rol.create');
+    })->name('user_rol.create');
 
     // Ruta para otras listas específicas (si se necesita en el futuro)
     // Ejemplo: Ruta para empresas
