@@ -124,4 +124,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->teams()->wherePivot('role', 'doctor')->orWherePivot('role_id', 2);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(\App\Models\Appointment::class, 'patient_id');
+    }
+
+
 }

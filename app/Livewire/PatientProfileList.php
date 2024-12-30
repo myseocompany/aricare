@@ -2,11 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileQueryService;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\User;
 
 class PatientProfileList extends Component
 {
@@ -24,20 +25,18 @@ class PatientProfileList extends Component
 
     public function render()
     {
-        // Consulta base para obtener los usuarios con rol de "paciente"
-        $query = User::query()->whereHas('teams', function (Builder $q) {
-            $q->where('team_user.role', 'patient')->orWhere('team_user.role_id', 6); // 3: ID del rol "paciente"
-        });
-
-        // Aplicar búsqueda global con el servicio
-        $query = $this->queryService->applySearch($query, [
-            'name',       // Campo en la tabla `users`
-            'email',      // Campo en la tabla `users`
-        ], $this->search);
-
+        // Inyectar el servicio de control de acceso
+        $accessControl = app(\App\Services\AccessControlService::class);
+    
+        // Obtener la consulta de pacientes según el rol del usuario autenticado
+        $query = $accessControl->getPatientsQuery(Auth::user());
+    
+        // Aplicar búsqueda global
+        $query = $this->queryService->applySearch($query, ['name', 'email'], $this->search);
+    
         // Paginar los resultados
         $items = $query->paginate($this->perPage);
-
+    
         return view('livewire.patient-profile-list', [
             'items' => $items,
             'columns' => [
@@ -47,4 +46,5 @@ class PatientProfileList extends Component
             ],
         ]);
     }
+    
 }

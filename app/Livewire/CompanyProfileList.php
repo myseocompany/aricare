@@ -24,9 +24,9 @@ class CompanyProfileList extends Component
 
     public function render()
     {
-        // Consulta base para obtener los usuarios con rol de "doctor"
+        // Consulta base para obtener los usuarios con rol de ""
         $query = User::query()->whereHas('teams', function (Builder $q) {
-            $q->where('role', 'doctor')->orWhere('role_id', 2); // Filtro por rol "doctor"
+            $q->where('role', 'doctor')->orWhere('role_id', 2); // Filtro por rol ""
         });
 
         // Aplicar búsqueda global con el servicio

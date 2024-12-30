@@ -13,11 +13,7 @@
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 px-2 mb-4">
                         <label for="company_type_id">Tipo de empresa:</label>
-<<<<<<< HEAD
-                        <select wire:model="selectedCompanyType" class="w-full border border-gray-300 p-2 rounded">
-=======
                         <select wire:model.live="selectedCompanyType" class="w-full border border-gray-300 p-2 rounded">
->>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
                             <option value="" disabled selected>Seleccione el tipo de empresa</option>
                             @foreach ($companyTypes as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
@@ -32,16 +28,10 @@
                 </div>
                 <div class="flex flex-wrap -mx-2">
                     <div class="w-full sm:w-1/2 px-2 mb-4">
-<<<<<<< HEAD
-                        <select wire:model.live="selectedEmployeeRange" class="w-full border border-gray-300 p-2 rounded">
-                            <option value="" disabled selected>Número de colaboradores</option>
-                            @foreach($employeeRanges as $range)
-=======
                         <label for="employee_range_id">Número de colaboradores:</label>
                         <select wire:model="selectedEmployeeRange" class="w-full border border-gray-300 p-2 rounded">
                             <option value="" disabled selected>Seleccione el rango de empleados</option>
                             @foreach ($employeeRanges as $range)
->>>>>>> 2428261 (Tablas de lookUp para cuenta de empresa)
                                 <option value="{{ $range->id }}">{{ $range->range }}</option>
                             @endforeach
                         </select>
@@ -55,37 +45,33 @@
                 </div>
             </div>
 
-            <!-- Segunda sección: Ubicación -->
-            <div class="w-full px-2 mb-4">
-                <h2 class="text-lg font-semibold text-gray-700 mb-2">Ubicación</h2>
-                <div class="mb-4">
-                    <select wire:model.live="selectedCountry" class="w-full border border-gray-300 p-2 rounded">
-                        <option value="" selected>Seleccione un país</option>
-                        @foreach($countries as $country)
-                            <option value="{{ $country->id }}">{{ $country->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <select wire:model.live="selectedDivision" class="w-full border border-gray-300 p-2 rounded" {{ empty($divisions) ? 'disabled' : '' }}>
-                        <option value="" selected>Seleccione una división</option>
-                        @foreach($divisions as $division)
-                            <option value="{{ $division->id }}">{{ $division->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <select wire:model.live="selectedCity" class="w-full border border-gray-300 p-2 rounded" {{ empty($cities) ? 'disabled' : '' }}>
-                        <option value="" selected>Seleccione una ciudad</option>
-                        @foreach($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <input wire:model.live="address" type="text" class="w-full border border-gray-300 p-2 rounded" placeholder="Dirección completa" />
-                </div>
-            </div>
+<!-- Segunda sección: Ubicación -->
+<div class="w-full px-2 mb-4">
+    <h2 class="text-lg font-semibold text-gray-700 mb-2">Ubicación</h2>
+    <div class="mb-4">
+        <label for="division_id">Departamento:</label>
+        <select wire:model.live="selectedDivision" class="w-full border border-gray-300 p-2 rounded">
+            <option value="" selected>Seleccione un departamento</option>
+            @foreach($divisions as $division)
+                <option value="{{ $division->id }}">{{ $division->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="mb-4">
+        <label for="city_id">Ciudad:</label>
+        <select wire:model.live="selectedCity" class="w-full border border-gray-300 p-2 rounded" {{ empty($cities) ? 'disabled' : '' }}>
+            <option value="" selected>Seleccione una ciudad</option>
+            @foreach($cities as $city)
+                <option value="{{ $city->id }}">{{ $city->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="mb-4">
+        <label for="address">Dirección:</label>
+        <input wire:model="address" type="text" class="w-full border border-gray-300 p-2 rounded" placeholder="Dirección completa" />
+    </div>
+</div>
+
 
             <!-- Botón Guardar -->
             <div class="w-full flex justify-end">
