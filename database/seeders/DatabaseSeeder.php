@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ResourceSeeder::class,        // Crear recursos asociados a sucursales
             AppointmentSeeder::class,     // Crea citas, si aplica
             ModulesTableSeeder::class,
+            LookupSeeder::class,
         ]);
     }
 }

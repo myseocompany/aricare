@@ -11,8 +11,8 @@ class CreatePatientProfilesTable extends Migration
         Schema::create('patient_profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->date('birth_date'); // Fecha de nacimiento
-            $table->string('gender'); // Género
+            $table->date('birth_date')->nullable(); // Fecha de nacimiento
+            $table->string('gender')->nullable(); // Género
             $table->string('blood_type')->nullable(); // Tipo de sangre
             $table->string('phone')->nullable();
             $table->text('address')->nullable(); // Dirección

@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileQueryService;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
@@ -15,6 +14,7 @@ class PatientProfileList extends Component
 
     public string $search = '';
     public int $perPage = 10;
+    public ?User $selectedPatient = null; // Paciente seleccionado
     private ProfileQueryService $queryService;
 
     public function __construct()
@@ -23,20 +23,53 @@ class PatientProfileList extends Component
         $this->queryService = app(ProfileQueryService::class);
     }
 
+    /**
+     * Seleccionar un paciente para mostrar su perfil.
+     *
+     * @param int $patientId
+     */
+    public function selectPatient(int $patientId)
+    {
+        try {
+            $this->selectedPatient = User::patients()->findOrFail($patientId);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            abort(404, 'Paciente no encontrado.');
+        }
+    }
+
+    /**
+     * Regresar a la lista de pacientes.
+     */
+    public function backToList()
+    {
+        $this->selectedPatient = null;
+    }
+
+    /**
+     * Renderizar la vista del componente.
+     */
     public function render()
     {
-        // Inyectar el servicio de control de acceso
-        $accessControl = app(\App\Services\AccessControlService::class);
-    
-        // Obtener la consulta de pacientes según el rol del usuario autenticado
-        $query = $accessControl->getPatientsQuery(Auth::user());
-    
+        if ($this->selectedPatient) {
+            
+        
+            // Mostrar el perfil del paciente seleccionado
+            return view('livewire.patient-profile-list', [
+                'profileComponent' => 'patient-profile-form',
+                'patient' => $this->selectedPatient->id,
+            ]);
+        }
+
+        // Consulta para listar pacientes
+        $query = User::patients();
+
         // Aplicar búsqueda global
         $query = $this->queryService->applySearch($query, ['name', 'email'], $this->search);
-    
+
         // Paginar los resultados
         $items = $query->paginate($this->perPage);
-    
+
+        // Renderizar la lista de pacientes
         return view('livewire.patient-profile-list', [
             'items' => $items,
             'columns' => [
@@ -46,5 +79,4 @@ class PatientProfileList extends Component
             ],
         ]);
     }
-    
 }

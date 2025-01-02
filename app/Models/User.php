@@ -11,6 +11,8 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -118,6 +120,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(PatientProfile::class);
     }
 
+
+
     // Relación específica para doctores
     public function isDoctor()
     {
@@ -129,5 +133,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(\App\Models\Appointment::class, 'patient_id');
     }
 
+
+
+    public function scopePatients($query)
+    {
+        return $query->whereHas('teamUser', function ($query) {
+            $query->where('role_id', 6); // 6 es el ID del rol para pacientes
+        });
+    }
+
+    public function teamUser()
+    {
+        return $this->hasOne(\App\Models\TeamUser::class, 'user_id');
+    }
+
+    public function teamUsers()
+{
+    return $this->hasMany(TeamUser::class, 'user_id');
+}
 
 }
