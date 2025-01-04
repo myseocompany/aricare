@@ -18,7 +18,6 @@ aria-hidden="true"
             <div class="modal-header">
                 <h5 class="modal-title" id="createAppointmentModalLabel">Agendar Cita</h5>
                 <input type="hidden" name="modal_action" id="modal_action" value="save">
-                
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -96,6 +95,28 @@ aria-hidden="true"
                         <input type="time" id="appointmentEndTime" name="end_time" class="form-control">
                     </div>
                 </div>
+
+                <!-- Recurrencia (repetir) -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="recurrence" class="form-label">Repetir</label>
+                        <select id="recurrence" name="recurrence" class="form-control">
+                            <option value="">No repetir</option>
+                            <option value="daily">Diariamente</option>
+                            <option value="weekly">Semanalmente</option>
+                            <option value="monthly">Mensualmente</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3" id="recurrenceEndWrapper" style="display:none;">
+                        <label for="recurrenceEnd" class="form-label">Hasta</label>
+                        <input type="date" id="recurrenceEnd" name="recurrence_end" class="form-control">
+                    </div>
+                </div>
+                <script>
+                    document.getElementById('recurrence').addEventListener('change', function() {
+                        document.getElementById('recurrenceEndWrapper').style.display = this.value ? 'block' : 'none';
+                    });
+                </script>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
