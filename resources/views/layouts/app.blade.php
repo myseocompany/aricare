@@ -15,6 +15,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        <!-- TinyMCE -->
+        <script src="https://cdn.tiny.cloud/1/la9foo6cl8ncqn6xlyakbzatrfpulx06e4s8rg2iohqrxddx/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -122,3 +122,13 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::resource('appointments', AppointmentController::class)->except(['create', 'edit']);
 
+Route::get('/api/events', [AppointmentController::class, 'events'])->name('api.events');
+
+
+Route::get('/appointments/{aid}', [AppointmentController::class, 'showAttention'])->name('attention');
+
+
+
+Route::get('/patients/appointment/attend/{appointment}', [AppointmentController::class, 'attend'])
+    ->name('appointments.attend');
+

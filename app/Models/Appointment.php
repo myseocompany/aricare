@@ -24,12 +24,19 @@ class Appointment extends Model
         'resource_id',
         'reason',
         'type_id',
+        'block_type_id', 
+        'block_end_date', 
+        'description',
+        'clinical_notes',
+        'is_completed',
+        'attention_date',
     ];
 
     // Configurar los campos como fechas
     protected $casts = [
         'start_time' => 'datetime',
         'end_time' => 'datetime',
+        'block_end_date' => 'date', // Cast para block_end_date
     ];
 
     /**

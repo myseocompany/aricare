@@ -61,7 +61,22 @@ class PatientProfileList extends Component
         }
 
         // Consulta para listar pacientes
-        $query = User::patients();
+        $query = User::patients()->with(['appointments' => function ($query) {
+                $query->where('start_time', '>=', now())
+                    ->orderBy('start_time', 'asc');
+            }])
+            ->when($this->search, function ($query) {
+                $query->where(function ($subQuery) {
+                    $subQuery->where('name', 'like', "%{$this->search}%")
+                            ->orWhere('email', 'like', "%{$this->search}%");
+                });
+            })
+            ->orderByRaw("
+                (SELECT MIN(start_time)
+                FROM appointments
+                WHERE appointments.patient_id = users.id
+                AND appointments.start_time >= NOW()) ASC
+            ");
 
         // Aplicar búsqueda global
         $query = $this->queryService->applySearch($query, ['name', 'email'], $this->search);
@@ -75,6 +90,7 @@ class PatientProfileList extends Component
             'columns' => [
                 'name' => 'Nombre',
                 'email' => 'Correo Electrónico',
+                'next_appointment' => 'Próxima Cita',
                 'created_at' => 'Fecha de Registro',
             ],
         ]);

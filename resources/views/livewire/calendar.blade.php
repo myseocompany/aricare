@@ -27,7 +27,7 @@ aria-hidden="true"
                         <div class="mb-3">
                             <label for="patient_id" class="form-label">Paciente</label>
                             <select id="patient_id" name="patient_id" class="form-control">
-                                <option value="">Selecciona un paciente</option>
+                                <optione value="">Selecciona un paciente</optione>
                                 @foreach($patients as $patient)
                                     <option value="{{ $patient->id }}">{{ $patient->name }}</option>
                                 @endforeach
@@ -40,7 +40,7 @@ aria-hidden="true"
                         <div class="mb-3">
                             <label for="type_id" class="form-label">Tipo de Cita</label>
                             <select id="type_id" name="type_id" class="form-control">
-                                <option value="">Selecciona un tipo</option>
+                                <optione value="">Selecciona un tipo</optione>
                                 @foreach($types as $type)
                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
                                 @endforeach
@@ -53,7 +53,7 @@ aria-hidden="true"
                         <div class="mb-3">
                             <label for="branch_id" class="form-label">Sede</label>
                             <select id="branch_id" name="branch_id" class="form-control">
-                                <option value="">Selecciona una sede</option>
+                                <optione value="">Selecciona una sede</optione>
                                 @foreach($branches as $branch)
                                     <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                 @endforeach
@@ -62,7 +62,7 @@ aria-hidden="true"
                         <div class="mb-3">
                             <label for="doctor_id" class="form-label">Doctor</label>
                             <select id="doctor_id" name="doctor_id" class="form-control">
-                                <option value="">Selecciona un doctor</option>
+                                <optione value="">Selecciona un doctor</optione>
                                 @foreach($doctors as $doctor)
                                     <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                                 @endforeach
@@ -71,7 +71,7 @@ aria-hidden="true"
                         <div class="mb-3">
                             <label for="resource_id" class="form-label">Unidad</label>
                             <select id="resource_id" name="resource_id" class="form-control">
-                                <option value="">Selecciona una unidad</option>
+                                <optione value="">Selecciona una unidad</optione>
                                 @foreach($resources as $resource)
                                     <option value="{{ $resource->id }}">{{ $resource->name }}</option>
                                 @endforeach
@@ -99,21 +99,21 @@ aria-hidden="true"
                 <!-- Recurrencia (repetir) -->
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="recurrence" class="form-label">Repetir</label>
-                        <select id="recurrence" name="recurrence" class="form-control">
+                        <label for="block_type_id" class="form-label">Repetir</label>
+                        <select id="block_type_id" name="block_type_id" class="form-control">
                             <option value="">No repetir</option>
-                            <option value="daily">Diariamente</option>
-                            <option value="weekly">Semanalmente</option>
-                            <option value="monthly">Mensualmente</option>
+                            @foreach($blockTypes as $blockType)
+                                <option value="{{ $blockType->id }}">{{ $blockType->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-6 mb-3" id="recurrenceEndWrapper" style="display:none;">
-                        <label for="recurrenceEnd" class="form-label">Hasta</label>
-                        <input type="date" id="recurrenceEnd" name="recurrence_end" class="form-control">
+                        <label for="block_end_date" class="form-label">Hasta</label>
+                        <input type="date" id="block_end_date" name="block_end_date" class="form-control">
                     </div>
                 </div>
                 <script>
-                    document.getElementById('recurrence').addEventListener('change', function() {
+                    document.getElementById('block_type_id').addEventListener('change', function() {
                         document.getElementById('recurrenceEndWrapper').style.display = this.value ? 'block' : 'none';
                     });
                 </script>

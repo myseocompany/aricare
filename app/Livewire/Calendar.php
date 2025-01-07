@@ -15,6 +15,7 @@ use App\Models\AppointmentType;
 use App\Models\User;
 use App\Models\Branch;
 use App\Models\Resource;
+use App\Models\BlockType; // Modelo para tipos de bloqueo
 
 
 
@@ -82,30 +83,62 @@ class Calendar extends Component
         Appointment::findOrFail($id)->update($validated);
     }
 
-
     public function getEvents()
-{
-    if (!$this->startDate || !$this->endDate) {
-        return [];
+    {
+        if (!$this->startDate || !$this->endDate) {
+            return [];
+        }
+
+        return Appointment::whereBetween('start_time', [$this->startDate, $this->endDate])
+            ->get()
+            ->map(function ($appointment) {
+                $event = [
+                    'id' => $appointment->id,
+                    'title' => $appointment->patient->name ?? 'Sin nombre', // Manejo de pacientes nulos
+                    'start' => $appointment->start_time,
+                    'end' => $appointment->end_time,
+                    'description' => $appointment->description ?? '',
+                    'extendedProps' => [
+                        'reason' => $appointment->reason ?? '',
+                        'type' => $appointment->type->name ?? 'No especificado',
+                    ],
+                    'color' => $appointment->type->color ?? '#FFFFFF', // Color predeterminado
+                ];
+
+                // Agregar recurrencia si aplica
+                if ($appointment->block_type_id && $appointment->block_end_date) {
+                    //$event['daysOfWeek'] = $this->getDaysOfWeek($appointment->block_type_id); // Días de la semana
+                    $event['startRecur'] = Carbon::parse($appointment->start_time)->toDateString(); // Inicio recurrencia
+                    $event['endRecur'] = Carbon::parse($appointment->block_end_date)->toDateString(); // Fin recurrencia
+                    $event['startTime'] = Carbon::parse($appointment->start_time)->format('H:i'); // Hora inicio
+                    $event['endTime'] = $appointment->end_time ? Carbon::parse($appointment->end_time)->format('H:i') : null; // Hora fin
+                }
+
+                return $event;
+            })->toArray();
     }
 
-    return Appointment::whereBetween('start_time', [$this->startDate, $this->endDate])
-        ->get()
-        ->map(function ($appointment) {
-            return [
-                'id' => $appointment->id,
-                'title' => $appointment->patient ?? 'Sin nombre', // Asegúrate de manejar pacientes nulos
-                'start' => $appointment->start_time,
-                'end' => $appointment->end_time,
-                'description' => $appointment->description ?? '',
-                'extendedProps' => [
-                    'reason' => $appointment->reason ?? '',
-                    'type' => $appointment->type->name ?? 'No especificado',
-                ],
-                'color' => $appointment->type->color ?? '#FFFFFF', // Color del tipo de cita
-            ];
-        })->toArray();
-}
+    /**
+     * Obtener los días de la semana en formato de FullCalendar para un tipo de bloqueo.
+     *
+     * @param int $blockTypeId
+     * @return array|null
+     */
+    private function getDaysOfWeek(int $blockTypeId)
+    {
+        switch ($blockTypeId) {
+            case 1: // Diario
+                return null; // Null indica que aplica para todos los días
+            case 2: // Semanal
+                return [1, 2, 3, 4, 5]; // Lunes a viernes
+            case 3: // Mensual
+                return [Carbon::parse('first day of this month')->dayOfWeek]; // Día específico del mes
+            default:
+                return null;
+        }
+    }
+
+
 
 
     public function mount()
@@ -122,7 +155,7 @@ class Calendar extends Component
 
         $this->resources = Resource::all();
 
-
+        $this->blockTypes = BlockType::all(); // Cargar los tipos de bloqueo
  
 
         $this->appointments = Appointment::all()->map(function ($appointment) {
@@ -211,8 +244,12 @@ class Calendar extends Component
         }
 
         return view('livewire.calendar', [
-            'events' => $events
+            'events' => $events,
+            'blockTypes' => $this->blockTypes
+
         ]);
+
+        
     }
 
     

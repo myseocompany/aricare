@@ -16,6 +16,9 @@
             <li class="nav-item">
                 <a class="nav-link {{ $currentTab === 'companion' ? 'active' : '' }}" wire:click="setTab('companion')">Acompañante</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ $currentTab === 'appointments' ? 'active' : '' }}" wire:click="setTab('appointments')">Citas</a>
+            </li>
         </ul>
 
         <!-- Contenido dinámico debajo de las pestañas -->
@@ -31,6 +34,8 @@
             @livewire('patient-profile.responsible', ['patientProfile' => $patientProfile])
         @elseif ($currentTab === 'companion')
             @livewire('patient-profile.companion', ['patientProfile' => $patientProfile])
+        @elseif ($currentTab === 'appointments')
+            @livewire('patient-profile.appointments', ['patientProfile' => $patientProfile])
         @endif
         
 

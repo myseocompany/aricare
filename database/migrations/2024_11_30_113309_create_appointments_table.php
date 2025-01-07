@@ -23,6 +23,12 @@ class CreateAppointmentsTable extends Migration
             $table->foreignId('branch_id')->nullable()->constrained('branches')->onDelete('cascade'); // Relación con la sede de la clínica
             $table->string('reason')->nullable(); // Motivo de la consulta
             $table->string('description')->nullable(); // Descripción de la cita
+
+            // Campos para bloquear una cita
+            $table->foreignId('block_type_id')->nullable()->constrained('block_types')->onDelete('set null'); // Tipo de bloqueo
+            $table->date('block_end_date')->nullable(); // Fecha de finalización del bloqueo
+
+
             $table->timestamps(); // created_at y updated_at
         });
     }
