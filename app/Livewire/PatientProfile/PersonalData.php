@@ -26,9 +26,9 @@ class PersonalData extends Component
     public $genderOptions;
     public $bloodTypeOptions;
     public $civilStatusOptions;
-    public $patientProfileId;
 
-    public function mount($patientProfile)
+
+    public function mount(PatientProfile $patientProfile)
     {
         $this->patientProfile = $patientProfile;
         
@@ -43,6 +43,9 @@ class PersonalData extends Component
 
         // Países y Ciudades
         $this->countryOptions = Country::pluck('name', 'id');
+        $this->patientProfile->birth_date = $this->patientProfile->birth_date ?? now()->format('Y-m-d'); // Fecha inicial predeterminada si está vacía
+        
+   
         if ($this->patientProfile->city_of_birth) {
             $this->selectedCountry = City::find($this->patient->city_of_birth)->division->country_id;
             $this->loadCities();
@@ -68,17 +71,20 @@ class PersonalData extends Component
 
     public function save()
     {
+        dd($this->patientProfile->toArray());
         $this->validate([
-            'patient.document_type_id' => 'required|exists:lookups,id',
-            'patient.document_id' => 'required|string|max:50|unique:patient_profiles,document_id',
-            'patient.birth_date' => 'required|date',
-            'patient.gender' => 'required|string',
-            'patient.blood_type' => 'nullable|string',
-            'patient.civil_status_id' => 'nullable|exists:lookups,id',
-            'patient.occupation_id' => 'nullable|exists:lookups,id',
-            'patient.insurance_id' => 'nullable|exists:lookups,id',
-            'patient.risk_level_id' => 'nullable|exists:lookups,id',
-            'patient.city_of_birth' => 'nullable|exists:cities,id',
+            'patientProfile.document_type_id' => 'required|exists:lookups,id',
+            'patientProfile.document_id' => 'required|string|max:50|unique:patient_profiles,document_id',
+            'patientProfile.birth_date' => 'required|date',
+            'patientProfile.gender' => 'required|string',
+            'patientProfile.blood_type' => 'nullable|string',
+            'patientProfile.civil_status_id' => 'nullable|exists:lookups,id',
+            'patientProfile.occupation_id' => 'nullable|exists:lookups,id',
+            'patientProfile.insurance_id' => 'nullable|exists:lookups,id',
+            'patientProfile.risk_level_id' => 'nullable|exists:lookups,id',
+            'patientProfile.city_of_birth' => 'nullable|exists:cities,id',
+            'patientProfile.nationality' => 'nullable|string|max:255',
+            'patientProfile.is_active' => 'required|boolean',
         ]);
     
             // Guardar los datos del paciente con el user_id asociado

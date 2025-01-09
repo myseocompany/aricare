@@ -13,11 +13,21 @@ class PatientProfile extends Model
 
     protected $fillable = [
         'user_id',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'second_last_name',
         'birth_date',
         'gender',
         'blood_type',
         'phone',
         'address',
+        'civil_status_id',
+        'insurance_id',
+        'risk_level_id',
+        'nationality',
+        'is_active',
+        'occupation',
     ];
 
     public function user()

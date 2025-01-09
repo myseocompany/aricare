@@ -61,10 +61,14 @@ class PatientProfileList extends Component
         }
 
         // Consulta para listar pacientes
-        $query = User::patients()->with(['appointments' => function ($query) {
+        $query = User::patients()
+            ->with(['appointments' => function ($query) {
                 $query->where('start_time', '>=', now())
                     ->orderBy('start_time', 'asc');
             }])
+            ->leftJoin('patient_profiles', 'users.id', '=', 'patient_profiles.user_id')
+            ->select('users.*', 'patient_profiles.id as profile_exists')
+            
             ->when($this->search, function ($query) {
                 $query->where(function ($subQuery) {
                     $subQuery->where('name', 'like', "%{$this->search}%")
@@ -75,7 +79,7 @@ class PatientProfileList extends Component
                 (SELECT MIN(start_time)
                 FROM appointments
                 WHERE appointments.patient_id = users.id
-                AND appointments.start_time >= NOW()) ASC
+                AND appointments.start_time >= NOW()) DESC
             ");
 
         // Aplicar búsqueda global
@@ -90,8 +94,8 @@ class PatientProfileList extends Component
             'columns' => [
                 'name' => 'Nombre',
                 'email' => 'Correo Electrónico',
+                'profile_exists' => 'Perfil de Paciente',
                 'next_appointment' => 'Próxima Cita',
-                'created_at' => 'Fecha de Registro',
             ],
         ]);
     }

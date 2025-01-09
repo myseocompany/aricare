@@ -132,3 +132,5 @@ Route::get('/appointments/{aid}', [AppointmentController::class, 'showAttention'
 Route::get('/patients/appointment/attend/{appointment}', [AppointmentController::class, 'attend'])
     ->name('appointments.attend');
 
+
+

@@ -1,6 +1,14 @@
     <div class="container mt-3">
+        <div>
+            {{$patientProfile->id}} - {{$patientProfile->user_id}} -  {{$patientProfile->user->getName()}}
+           
+        </div>
         <!-- Menú de pestañas arriba -->
         <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {{ $currentTab === 'show' ? 'active' : '' }}" wire:click="setTab('show')">Atención</a>
+
+            </li>
             <li class="nav-item">
                 <a class="nav-link {{ $currentTab === 'personal-data' ? 'active' : '' }}" wire:click="setTab('personal-data')">Datos personales</a>
             </li>
@@ -23,8 +31,9 @@
 
         <!-- Contenido dinámico debajo de las pestañas -->
         <div class="mt-4">
-            @if ($currentTab === 'personal-data')
-            
+        @if($currentTab === 'show')
+            @livewire('patient-profile.show', ['patientProfile' => $patientProfile])
+        @elseif ($currentTab === 'personal-data')
             @livewire('patient-profile.personal-data', ['patientProfile' => $patientProfile])
         @elseif ($currentTab === 'address-data')
             @livewire('patient-profile.address-data', ['patientProfile' => $patientProfile])
@@ -36,6 +45,7 @@
             @livewire('patient-profile.companion', ['patientProfile' => $patientProfile])
         @elseif ($currentTab === 'appointments')
             @livewire('patient-profile.appointments', ['patientProfile' => $patientProfile])
+
         @endif
         
 

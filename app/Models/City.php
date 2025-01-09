@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
 {
-    //
+    public function division()
+    {
+        return $this->belongsTo(Division::class);
+    }
 }

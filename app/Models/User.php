@@ -120,6 +120,30 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(PatientProfile::class);
     }
 
+    public function getNameAttribute()
+    {
+        if ($this->patientProfile && ($this->patientProfile->first_name != null 
+            || $this->patientProfile->middle_name != null 
+            || $this->patientProfile->last_name != null 
+            || $this->patientProfile->second_last_name != null)) {
+            return trim(implode(' ', [
+                $this->patientProfile->first_name,
+                $this->patientProfile->middle_name,
+                $this->patientProfile->last_name,
+                $this->patientProfile->second_last_name,
+            ]));
+        }
+
+        return $this->attributes['name'] ?? 'Sin Nombre';
+    }
+
+    public function getName()
+    {
+
+        return $this->name;
+    }
+
+
 
 
     // Relación específica para doctores

@@ -28,13 +28,17 @@
                 @forelse ($items as $item)
                     <tr wire:click="selectPatient({{ $item->id }})" class="cursor-pointer hover:bg-gray-100">
                         @foreach(array_keys($columns) as $field)
-                        @if ($field === 'next_appointment')
-                            <td class="border p-2">
-                                {{ optional($item->appointments->first())->start_time ? \Carbon\Carbon::parse($item->appointments->first()->start_time)->format('Y-m-d H:i') : 'Sin Citas' }}
-                            </td>
-                        @else
-                            <td class="border p-2">{{ data_get($item, $field) }}</td>
-                        @endif
+                            @if ($field === 'next_appointment')
+                                <td class="border p-2">
+                                    {{ optional($item->appointments->first())->start_time ? \Carbon\Carbon::parse($item->appointments->first()->start_time)->format('Y-m-d H:i') : 'Sin Citas' }}
+                                </td>
+                            @elseif ($field === 'profile_exists')
+                                <td class="border p-2">
+                                    {{ $item->profile_exists ? 'Sí' : 'No' }}
+                                </td>
+                            @else
+                                <td class="border p-2">{{ data_get($item, $field) }}</td>
+                            @endif
                         @endforeach
                     </tr>
                 @empty

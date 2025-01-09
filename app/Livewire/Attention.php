@@ -4,13 +4,17 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Appointment;
+use Livewire\Attributes\On; 
 
 class Attention extends Component
 {
     public $appointmentId;
     public $clinicalNotes;
     public $isCompleted;
+    public $appointment;
     public string $clinical_notes = '';
+    public $document;
+   
 
     public function mount($appointmentId)
     {
@@ -19,6 +23,7 @@ class Attention extends Component
         $this->clinicalNotes = $appointment->clinical_notes;
         $this->isCompleted = $appointment->is_completed;
         $this->clinical_notes = $appointment->clinical_notes ?? '';
+        $this->appointment = $appointment;
     }
 
     public function saveAttention()
@@ -33,22 +38,41 @@ class Attention extends Component
         session()->flash('message', 'Atención guardada correctamente.');
     }
 
+    #[On('document-updated')] 
     public function updateClinicalNotes($content)
     {
-        $this->clinical_notes = $content;
+        
+        if (is_string($content)) {
+            $this->clinical_notes = $content;
+        } else {
+            throw new \Exception("Expected string, received: " . gettype($content));
+        }
+            
     }
+    
 
     public function saveNotes()
     {
-        $appointment = Appointment::find($this->appointmentId);
+        $appointment = Appointment::findOrFail($this->appointmentId);
         $appointment->update(['clinical_notes' => $this->clinical_notes]);
 
         session()->flash('message', 'Notas guardadas exitosamente.');
+        $this->dispatch('saved', 'Notas guardadas exitosamente.');
     }
+    
 
     public function render()
     {
-        return view('livewire.attention');
+        $appointment = $this->appointment;
+        return view('livewire.attention', compact('appointment'));
     }
+
+    public function updatedDocument($value)
+    {
+        $this->clinical_notes = $value;
+
+        $this->saveNotes();
+    }
+
 }
 
