@@ -8,6 +8,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\OrderController;
 
 
 
@@ -121,10 +122,12 @@ Route::middleware(['auth'])->group(function () {
     )->name('appointments.store');
 
 
-    Route::get('/billing', 'OrderController@show');
+//    Route::get('/billing', 'OrderController@show');
+    Route::get('billing',[ OrderController::class, 'index'])->name('billing');
     
 
 });
+
 Route::resource('appointments', AppointmentController::class)->except(['create', 'edit']);
 
 Route::get('/api/events', [AppointmentController::class, 'events'])->name('api.events');

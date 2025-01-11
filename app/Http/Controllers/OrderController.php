@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
-use App\Order;
-use App\OrderStatus;
-use App\User;
+use App\Models\Order;
+use App\Models\OrderStatus;
+use App\Models\User;
 use Auth;
-use App\Category;
-use App\Customer;
-use App\OrderTransaction;
-use App\Product;
-use App\ProductType;
-use App\OrderProduct;
-use App\Payment;
+use App\Models\Category;
+use App\Models\Customer;
+
+use App\Models\OrderTransaction;
+use App\Models\Product;
+use App\Models\ProductType;
+use App\Models\OrderProduct;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Cookie;
 
 
@@ -23,7 +24,7 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
 
