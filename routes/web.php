@@ -128,7 +128,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::get('/orders/{id}/show', [OrderController:: class, 'show']);
+Route::get('/billing/{id}/show', [OrderController:: class, 'show']);
 
 Route::resource('appointments', AppointmentController::class)->except(['create', 'edit']);
 

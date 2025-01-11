@@ -1,5 +1,5 @@
 <x-app-layout>
-
+  <x-slot name="header">Ordenes</x-slot>
   @php
       $total_payments = Array();
       foreach($payments as $item){
@@ -24,7 +24,7 @@
       <div>{{$item->delivery_address}}</div>
       <div><a href="/products/{{$item->product_id}}/show">{{$item->name}}</a></div>
       <div>@if(isset($item->user))
-        <a href="/orders/{{$item->id}}/show">{{$item->user->name}}</a>
+        <a href="/billing/{{$item->id}}/show">{{$item->user->name}}</a>
       @endif</div>
       <div>
         @if(isset($item->payment))

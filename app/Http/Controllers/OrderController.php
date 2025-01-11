@@ -137,10 +137,10 @@ class OrderController extends Controller
         $payments = Payment::all();
         $statuses = OrderStatus::all();
         $products = Product::where("status_id", 1)->get();
-        $referal = User::where('role_id', 3)->get();
-        $users = User::where('role_id', 1)->get();
+        $users = User::find($id);
 
-        return view('orders.show', compact('model', 'referal', 'users', 'payments', 'statuses', 'products', 'product_types'));
+
+        return view('billing.show', compact('model', 'payments', 'statuses', 'products'));
     }
 
 
@@ -216,10 +216,7 @@ class OrderController extends Controller
         $products = Product::where("status_id", 1)->get();
         $statuses = OrderStatus::all();
         $user =  Auth::id();
-        $users = User::where('role_id', 1)->get();
-        $referal = User::where('role_id', 3)->get();
-
-        return view('orders.create', compact('model', 'users', 'user', 'referal', 'products', 'statuses'));
+        return view('orders.create', compact('model', 'users', 'user', 'products', 'statuses'));
     }
     public function edit($id)
     {
@@ -229,10 +226,8 @@ class OrderController extends Controller
         $products = Product::where("status_id", 1)->get();
         $statuses = OrderStatus::all();
         $user =  Auth::id();
-        $users = User::where('role_id', 1)->get();
-        $referal = User::where('role_id', 3)->get();
 
-        return view('orders.edit', compact('model', 'users', 'user', 'referal', 'products', 'statuses'));
+        return view('orders.edit', compact('model', 'users', 'user', 'products', 'statuses'));
     }
 
     public function addProducts($oid)
@@ -243,10 +238,8 @@ class OrderController extends Controller
         $payments = Payment::all();
         $products = Product::where("status_id", 1)->get();
         $statuses = OrderStatus::all();
-        $users = User::where('role_id', 1)->get();
-        $referal = User::where('role_id', 3)->get();
 
-        return view('orders.add_product', compact('model', 'users', 'referal', 'payments', 'products', 'statuses'));
+        return view('orders.add_product', compact('model', 'users', 'payments', 'products', 'statuses'));
     }
 
 
@@ -269,9 +262,6 @@ class OrderController extends Controller
         $model->status_id = $request->status_id;
 
         $model->user_id = $request->user_id;
-        $model->referal_user_id = $request->referal_user_id;
-
-        //dd($request->referal_user_id);
 
         // Guardar la IP del usuario
         $model->user_ip = $request->ip();
@@ -416,8 +406,6 @@ class OrderController extends Controller
         if (isset($request->user_id) && $request->user_id != "")
             $model->user_id = $request->user_id;
     
-        if (isset($request->referal_user_id) && $request->referal_user_id != "")
-            $model->referal_user_id = $request->referal_user_id;
     
         if (isset($request->longitude) && $request->longitude != "" && is_numeric($request->longitude)) {
             $model->longitude = $request->longitude;
