@@ -60,7 +60,9 @@
                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
                 <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
             </svg>
-            <span>Facturación</span>
+            <a href="{{ route('assistants.index') }}" class="no-underline text-gray-500 hover:text-blue-700">
+                <span>Facturacion</span>
+            </a>
         </div>
         <div class="element flex flex-row items-center gap-3 cursor-pointer my-2 p-2 rounded-md text-gray-500 hover:bg-blue-100 hover:text-blue-700 transition ease-in-out duration-150">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">

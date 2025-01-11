@@ -108,6 +108,10 @@ Route::middleware(['auth'])->group(function () {
         return view('assistant_profiles.index'); // Vista que incluye <livewire:company-profile-list />
     })->name('assistants.index');
 
+    Route::get('/billing', function () {
+        return view('billing.index');
+    })->name('billing.index');
+
     Route::get('/agendas', function () {
         return view('agendas.index'); 
     })->name('agendas.index');
@@ -117,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
     )->name('appointments.store');
 
 
+    Route::get('/billing', 'OrderController@show');
     
 
 });

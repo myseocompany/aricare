@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             AppointmentSeeder::class,     // Crea citas, si aplica
             ModulesTableSeeder::class,
             LookupSeeder::class,
+            OrderStatusesTableSeeder::class,
+            PaymentsTableSeeder::class,
+            OrdersTableSeeder::class,
         ]);
     }
 }
