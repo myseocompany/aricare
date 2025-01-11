@@ -128,6 +128,8 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+Route::get('/orders/{id}/show', [OrderController:: class, 'show']);
+
 Route::resource('appointments', AppointmentController::class)->except(['create', 'edit']);
 
 Route::get('/api/events', [AppointmentController::class, 'events'])->name('api.events');

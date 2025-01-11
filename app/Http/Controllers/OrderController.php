@@ -14,7 +14,6 @@ use App\Models\Category;
 
 use App\Models\OrderTransaction;
 use App\Models\Product;
-use App\Models\ProductType;
 use App\Models\OrderProduct;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Cookie;
@@ -22,13 +21,6 @@ use Illuminate\Support\Facades\Cookie;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
-
-
 
     public function index(Request $request)
     {
@@ -145,7 +137,6 @@ class OrderController extends Controller
         $payments = Payment::all();
         $statuses = OrderStatus::all();
         $products = Product::where("status_id", 1)->get();
-        $product_types = ProductType::all();
         $referal = User::where('role_id', 3)->get();
         $users = User::where('role_id', 1)->get();
 

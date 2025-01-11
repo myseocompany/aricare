@@ -23,8 +23,8 @@
       <div><strong>OrderID:</strong> {{$item->id}} @if(isset($item->user))<strong>Atendido por</strong> {{$item->user->name}}@endif</div>
       <div>{{$item->delivery_address}}</div>
       <div><a href="/products/{{$item->product_id}}/show">{{$item->name}}</a></div>
-      <div>@if(isset($item->customer))
-        <a href="/orders/{{$item->id}}/show">{{$item->customer->name}}</a>
+      <div>@if(isset($item->user))
+        <a href="/orders/{{$item->id}}/show">{{$item->user->name}}</a>
       @endif</div>
       <div>
         @if(isset($item->payment))

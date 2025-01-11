@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('cie10', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 10)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
-            $table->string('name', 300)->charset('utf8mb4')->collation('utf8mb4_0900_ai_ci');
+            $table->string('code', 10)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
+            $table->string('name', 300)->charset('utf8mb4')->collation('utf8mb4_unicode_ci');
             $table->timestamps();
         });
+        
     }
     
 

@@ -110,10 +110,10 @@ class Order extends Model
 
     public function getTotal()
     {
-        // Suponiendo que tienes un atributo price, quantity, y discounts
-        $subtotal = $this->price * $this->quantity;
-        $totalDiscount = $subtotal * ($this->discounts / 100);
-
+        $subtotal = $this->price * $this->quantity; // Precio por cantidad
+        $totalDiscount = $subtotal * ($this->discounts / 100); // Descuento en porcentaje
+    
         return $subtotal - $totalDiscount + $this->shippingCharges + $this->IVA - $this->IVAReturn;
     }
+    
 }
