@@ -10,7 +10,7 @@ use App\Models\OrderStatus;
 use App\Models\User;
 use Auth;
 use App\Models\Category;
-use App\Models\Customer;
+
 
 use App\Models\OrderTransaction;
 use App\Models\Product;
@@ -87,7 +87,7 @@ class OrderController extends Controller
 
 
         )
-            ->select(DB::raw('orders.created_at, orders.status_id, user_id, orders.notes, orders.id, customer_id, delivery_date, delivery_address,  payment_id ,customer_id'))
+            ->select(DB::raw('orders.created_at, orders.status_id, user_id, orders.notes, orders.id, delivery_date, delivery_address,  payment_id'))
             ->orderBy('delivery_date', 'DESC')
             ->paginate(50);
 
@@ -221,30 +221,27 @@ class OrderController extends Controller
     {
 
 
-        $customer = Customer::find($cid);
         $model = new Order;
-        $model->customer_id = $cid;
         $products = Product::where("status_id", 1)->get();
         $statuses = OrderStatus::all();
         $user =  Auth::id();
         $users = User::where('role_id', 1)->get();
         $referal = User::where('role_id', 3)->get();
 
-        return view('orders.create', compact('customer', 'model', 'users', 'user', 'referal', 'products', 'statuses'));
+        return view('orders.create', compact('model', 'users', 'user', 'referal', 'products', 'statuses'));
     }
     public function edit($id)
     {
 
 
         $model = Order::find($id);
-        $customer = Customer::all();
         $products = Product::where("status_id", 1)->get();
         $statuses = OrderStatus::all();
         $user =  Auth::id();
         $users = User::where('role_id', 1)->get();
         $referal = User::where('role_id', 3)->get();
 
-        return view('orders.edit', compact('model', 'customer', 'users', 'user', 'referal', 'products', 'statuses'));
+        return view('orders.edit', compact('model', 'users', 'user', 'referal', 'products', 'statuses'));
     }
 
     public function addProducts($oid)
@@ -278,8 +275,6 @@ class OrderController extends Controller
         $model->updated_user_id = Auth::id();
 
 
-
-        $model->customer_id = $request->customer_id;
         $model->status_id = $request->status_id;
 
         $model->user_id = $request->user_id;
@@ -422,9 +417,6 @@ class OrderController extends Controller
     
         if (isset($request->notes) && $request->notes != "")
             $model->notes = $request->notes;
-    
-        if (isset($request->customer_id) && $request->customer_id != "")
-            $model->customer_id = $request->customer_id;
     
         if (isset($request->status_id) && $request->status_id != "") 
             $model->status_id = $request->status_id;

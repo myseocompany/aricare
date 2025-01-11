@@ -12,7 +12,6 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'customer_id',
         'product_id',
         'invoice_id',
         'quantity',
@@ -54,14 +53,6 @@ class Order extends Model
     ];
 
     /**
-     * Get the customer associated with the order.
-     */
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
-
-    /**
      * Get the product associated with the order.
      */
     public function product()
@@ -82,7 +73,7 @@ class Order extends Model
      */
     public function status()
     {
-        return $this->belongsTo(Status::class);
+        return $this->belongsTo(OrderStatus::class);
     }
 
     /**
@@ -115,5 +106,14 @@ class Order extends Model
     public function referalUser()
     {
         return $this->belongsTo(User::class, 'referal_user_id');
+    }
+
+    public function getTotal()
+    {
+        // Suponiendo que tienes un atributo price, quantity, y discounts
+        $subtotal = $this->price * $this->quantity;
+        $totalDiscount = $subtotal * ($this->discounts / 100);
+
+        return $subtotal - $totalDiscount + $this->shippingCharges + $this->IVA - $this->IVAReturn;
     }
 }
