@@ -34,7 +34,8 @@
         @if($currentTab === 'show')
             @livewire('patient-profile.show', ['patientProfile' => $patientProfile])
         @elseif ($currentTab === 'personal-data')
-            @livewire('patient-profile.personal-data', ['patientProfile' => $patientProfile])
+            
+            <livewire:patient-profile.personal-data :user_id="$userId" />
         @elseif ($currentTab === 'address-data')
             @livewire('patient-profile.address-data', ['patientProfile' => $patientProfile])
         @elseif ($currentTab === 'additional-data')

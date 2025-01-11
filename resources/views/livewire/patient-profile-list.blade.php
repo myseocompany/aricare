@@ -2,7 +2,8 @@
     @if ($selectedPatient)
         <!-- Perfil del Paciente -->
         <button class="mb-4 btn btn-secondary" wire:click="backToList">Volver a la lista</button>
-        @livewire('patient-profile-form', ['userId' => $selectedPatient->id])
+        <livewire:patient-profile-form :user-id="$selectedPatient->id" />
+
     @else
         <!-- Búsqueda y Configuración de Paginación -->
         <div class="flex justify-between items-center mb-4">

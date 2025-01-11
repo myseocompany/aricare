@@ -23,6 +23,8 @@ class PatientProfileList extends Component
         $this->queryService = app(ProfileQueryService::class);
     }
 
+
+
     /**
      * Seleccionar un paciente para mostrar su perfil.
      *
